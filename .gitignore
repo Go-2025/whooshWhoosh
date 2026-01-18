@@ -15,4 +15,4 @@ classes/
 *.log
 
 # mc
-src/client/
+#src/client/
