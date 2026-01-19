@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "whooshwhoosh",
+  "version": "${version}",
+  "name": "whooshwhoosh",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/whooshwhoosh/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "fabric-datagen": [
+      "net.gopa.mc.whooshwhoosh.client.WhooshwhooshDataGenerator"
+    ],
+    "client": [
+      "net.gopa.mc.whooshwhoosh.client.WhooshwhooshClient"
+    ],
+    "main": [
+      "net.gopa.mc.whooshwhoosh.WhooshwhooshMod"
+    ]
+  },
+  "mixins": [
+    "whooshwhoosh.mixins.json",
+    {
+      "config": "whooshwhoosh.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
