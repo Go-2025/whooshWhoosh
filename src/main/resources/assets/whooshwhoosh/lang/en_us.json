@@ -4,5 +4,7 @@
   "enchantment.whooshwhoosh.launch": "launch",
   "enchantment.whooshwhoosh.launch.desc": "Attacks launch targets upward",
   "enchantment.whooshwhoosh.finisher": "finisher",
-  "enchantment.whooshwhoosh.finisher.desc": "Instantly slays enemies with low health when attacked"
+  "enchantment.whooshwhoosh.finisher.desc": "Instantly slays enemies with low health when attacked",
+  "enchantment.whooshwhoosh.offering": "offering",
+  "enchantment.whooshwhoosh.offering.desc": "Makes the item very fragile and drops experience when it breaks"
 }

@@ -4,6 +4,7 @@ import net.gopa.mc.whooshwhoosh.WhooshwhooshMod;
 import net.gopa.mc.whooshwhoosh.enchantment.ApotheosisEnchantment;
 import net.gopa.mc.whooshwhoosh.enchantment.FinisherEnchantment;
 import net.gopa.mc.whooshwhoosh.enchantment.LaunchEnchantment;
+import net.gopa.mc.whooshwhoosh.enchantment.OfferingEnchantment;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -14,7 +15,8 @@ import java.util.function.Supplier;
 public enum EnchantmentsRegistry {
     APOTHEOSIS("apotheosis", ApotheosisEnchantment::new),
     LAUNCH("launch", LaunchEnchantment::new),
-    FINISHER("finisher", FinisherEnchantment::new);
+    FINISHER("finisher", FinisherEnchantment::new),
+    OFFERING("offering", OfferingEnchantment::new);
 
     private final String id;
     private final Supplier<? extends Enchantment> enchantmentSupplier;

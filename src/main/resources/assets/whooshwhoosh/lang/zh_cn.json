@@ -4,5 +4,7 @@
   "enchantment.whooshwhoosh.launch": "击飞",
   "enchantment.whooshwhoosh.launch.desc": "将目标击飞",
   "enchantment.whooshwhoosh.finisher": "斩杀",
-  "enchantment.whooshwhoosh.finisher.desc": "对低血量的敌人造成足以秒杀的伤害"
+  "enchantment.whooshwhoosh.finisher.desc": "对低血量的敌人造成足以秒杀的伤害",
+  "enchantment.whooshwhoosh.offering": "祭品",
+  "enchantment.whooshwhoosh.offering.desc": "使物品变得相当脆弱，并在物品损坏时散落一些经验"
 }

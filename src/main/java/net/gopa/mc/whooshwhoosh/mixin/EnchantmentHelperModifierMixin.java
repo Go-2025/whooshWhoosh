@@ -11,6 +11,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -19,11 +20,14 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 
 @Mixin(EnchantmentHelper.class)
-public class EnchantmentModifierMixin {
+public abstract class EnchantmentHelperModifierMixin {
 
+    @Unique
     private static final Enchantment APOTHEOSIS_ENCHANT = EnchantmentsRegistry.APOTHEOSIS.get();
+    @Unique
     private static final Registry<Enchantment> ENCHANTMENT_REGISTRY = Registries.ENCHANTMENT;
 
+    @Unique
     private static void processEnchantments(
             ItemStack stack,
             BiConsumer<Enchantment, NbtCompound> processor
@@ -45,6 +49,7 @@ public class EnchantmentModifierMixin {
             ItemStack stack,
             CallbackInfo ci
     ) {
+
         processEnchantments(stack, (ench, compound) -> {
             if (ModEnchantment.isConsumable(ench)) stack.getEnchantments().remove(compound);});
     }

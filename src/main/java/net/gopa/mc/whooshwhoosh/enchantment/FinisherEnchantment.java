@@ -6,6 +6,10 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.item.AxeItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.SwordItem;
 
 public class FinisherEnchantment extends ModEnchantment {
 
@@ -16,7 +20,7 @@ public class FinisherEnchantment extends ModEnchantment {
     @Override
     public void onTargetDamaged(LivingEntity user, Entity target, int level) {
         if (target instanceof LivingEntity livingTarget) {
-            float strength =  (level + 0.5f) / 20f;
+            float strength =  (level - 0.5f) / 20f;
 
             float health = livingTarget.getHealth();
             float maxHealth = livingTarget.getMaxHealth();
@@ -25,10 +29,17 @@ public class FinisherEnchantment extends ModEnchantment {
 
             if (health / maxHealth <= strength && WhooshwhooshMod.RANDOM.nextBoolean()) {
                 DamageSource damageSource = user.getDamageSources().mobAttack(user);
-                livingTarget.damage(damageSource, health * Math.scalb(level, 2));
+                livingTarget.damage(damageSource, health * (int) Math.sqrt(level));
 //                WhooshwhooshMod.LOGGER.info(user.getName().getString() + " has been damaged!");
             }
         }
+    }
+
+
+    @Override
+    public boolean isAcceptableItem(ItemStack stack) {
+        Item item = stack.getItem();
+        return item instanceof SwordItem || item instanceof AxeItem;
     }
 
     @Override
