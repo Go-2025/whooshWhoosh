@@ -4,8 +4,10 @@
   "package": "net.gopa.mc.whooshwhoosh.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "EnchantmentHelperModifierMixin",
-    "ItemStackMixin"
+    "OfferingEnchMixin",
+    "SymbiosisEnchMixin",
+    "ApotheosisEnchMixin",
+    "ConsumableEnchMixin"
   ],
   "injectors": {
     "defaultRequire": 1

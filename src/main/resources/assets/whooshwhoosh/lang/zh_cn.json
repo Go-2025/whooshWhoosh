@@ -6,5 +6,7 @@
   "enchantment.whooshwhoosh.finisher": "斩杀",
   "enchantment.whooshwhoosh.finisher.desc": "对低血量的敌人造成足以秒杀的伤害",
   "enchantment.whooshwhoosh.offering": "祭品",
-  "enchantment.whooshwhoosh.offering.desc": "使物品变得相当脆弱，并在物品损坏时散落一些经验"
+  "enchantment.whooshwhoosh.offering.desc": "使物品变得相当脆弱，并在物品损坏时散落一些经验",
+  "enchantment.whooshwhoosh.symbiosis": "共生",
+  "enchantment.whooshwhoosh.symbiosis.desc": "使背包内带有此附魔的物品互相共享耐久值"
 }

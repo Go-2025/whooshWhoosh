@@ -6,5 +6,7 @@
   "enchantment.whooshwhoosh.finisher": "finisher",
   "enchantment.whooshwhoosh.finisher.desc": "Instantly slays enemies with low health when attacked",
   "enchantment.whooshwhoosh.offering": "offering",
-  "enchantment.whooshwhoosh.offering.desc": "Makes the item very fragile and drops experience when it breaks"
+  "enchantment.whooshwhoosh.offering.desc": "Makes the item very fragile and drops experience when it breaks",
+  "enchantment.whooshwhoosh.symbiosis": "symbiosis",
+  "enchantment.whooshwhoosh.symbiosis.desc": "Mutually shares durability among items in the inventory that have this enchantment"
 }

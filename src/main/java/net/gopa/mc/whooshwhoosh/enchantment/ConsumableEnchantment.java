@@ -9,8 +9,4 @@ public abstract class ConsumableEnchantment extends Enchantment {
     public ConsumableEnchantment(Rarity rarity, EnchantmentTarget target, EquipmentSlot[] slotTypes) {
         super(rarity, target, slotTypes);
     }
-
-    protected ConsumableEnchantment(Rarity rarity, EnchantmentTarget target, EquipmentSlot slotType) {
-        super(rarity, target, new EquipmentSlot[]{slotType});
-    }
 }
