@@ -5,7 +5,7 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public class ApotheosisEnchantment extends ModEnchantment {
+public class ApotheosisEnchantment extends ConsumableEnchantment {
 
     public ApotheosisEnchantment() {
         super(Rarity.VERY_RARE, EnchantmentTarget.VANISHABLE, EquipmentSlot.values());
@@ -21,8 +21,4 @@ public class ApotheosisEnchantment extends ModEnchantment {
         return true;
     }
 
-    @Override
-    public boolean isConsumable() {
-        return true;
-    }
 }

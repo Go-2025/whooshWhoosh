@@ -5,7 +5,7 @@ import net.gopa.mc.whooshwhoosh.registry.EnchantmentsRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Random;
+import net.minecraft.util.math.random.Random;
 
 public class WhooshwhooshMod implements ModInitializer {
 
@@ -13,7 +13,7 @@ public class WhooshwhooshMod implements ModInitializer {
 
     public static final Logger LOGGER = LoggerFactory.getLogger("Whoosh Whoosh");
 
-    public static final Random RANDOM = new Random();
+    public static final Random RANDOM = Random.create();
 
     @Override
     public void onInitialize() {

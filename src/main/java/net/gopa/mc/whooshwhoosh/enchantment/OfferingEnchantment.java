@@ -7,5 +7,4 @@ public class OfferingEnchantment extends VanishingCurseEnchantment {
     public OfferingEnchantment() {
         super(Rarity.VERY_RARE, EquipmentSlot.values());
     }
-
 }

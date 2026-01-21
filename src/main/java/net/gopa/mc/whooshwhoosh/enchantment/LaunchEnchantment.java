@@ -1,5 +1,6 @@
 package net.gopa.mc.whooshwhoosh.enchantment;
 
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
@@ -9,9 +10,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.util.math.Vec3d;
 
-public class LaunchEnchantment extends ModEnchantment {
+public class LaunchEnchantment extends Enchantment {
     public LaunchEnchantment() {
-        super(Rarity.UNCOMMON, EnchantmentTarget.WEAPON, EquipmentSlot.MAINHAND);
+        super(Rarity.UNCOMMON, EnchantmentTarget.WEAPON, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
     }
 
     @Override

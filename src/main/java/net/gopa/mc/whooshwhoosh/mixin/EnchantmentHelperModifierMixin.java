@@ -1,6 +1,6 @@
 package net.gopa.mc.whooshwhoosh.mixin;
 
-import net.gopa.mc.whooshwhoosh.enchantment.ModEnchantment;
+import net.gopa.mc.whooshwhoosh.enchantment.ConsumableEnchantment;
 import net.gopa.mc.whooshwhoosh.registry.EnchantmentsRegistry;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -49,9 +49,8 @@ public abstract class EnchantmentHelperModifierMixin {
             ItemStack stack,
             CallbackInfo ci
     ) {
-
         processEnchantments(stack, (ench, compound) -> {
-            if (ModEnchantment.isConsumable(ench)) stack.getEnchantments().remove(compound);});
+            if (ench instanceof ConsumableEnchantment) stack.getEnchantments().remove(compound);});
     }
 
     @Inject(method = "set", at = @At("TAIL"), order = 114)
