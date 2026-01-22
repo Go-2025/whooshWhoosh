@@ -21,13 +21,13 @@ public abstract class ApotheosisEnchMixin {
 
     @ModifyVariable(method = "set", at = @At("HEAD"), argsOnly = true)
     private static Map<Enchantment, Integer> MaxAllEnchWhenEnchantingApoth (
-            Map<Enchantment, Integer> enchantments
+            Map<Enchantment, Integer> values
     ) {
-        if (!enchantments.containsKey(APOTHEOSIS_ENCHANT)) return enchantments;
-        for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
+        if (!values.containsKey(APOTHEOSIS_ENCHANT)) return values;
+        for (Map.Entry<Enchantment, Integer> entry : values.entrySet()) {
             Enchantment enchantment = entry.getKey();
             entry.setValue(Math.max(entry.getValue(), enchantment.getMaxLevel()));
         }
-        return enchantments;
+        return values;
     }
 }

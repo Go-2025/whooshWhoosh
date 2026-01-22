@@ -32,9 +32,8 @@ public enum EnchantmentsRegistry {
     }
 
     public Enchantment get() {
-        if (enchantment == null) {
+        if (enchantment == null)
             enchantment = enchantmentSupplier.get();
-        }
         return enchantment;
     }
 }

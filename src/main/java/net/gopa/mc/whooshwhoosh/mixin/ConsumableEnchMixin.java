@@ -3,15 +3,11 @@ package net.gopa.mc.whooshwhoosh.mixin;
 import net.gopa.mc.whooshwhoosh.enchantment.ConsumableEnchantment;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 import java.util.Map;
-
-import static net.gopa.mc.whooshwhoosh.util.EnchantmentUtil.processEnchantments;
 
 /**
  * by {@link ConsumableEnchantment ConsumableEnchantment}
@@ -19,13 +15,14 @@ import static net.gopa.mc.whooshwhoosh.util.EnchantmentUtil.processEnchantments;
 @Mixin(EnchantmentHelper.class)
 public abstract class ConsumableEnchMixin {
 
-    @Inject(method = "set", at = @At("TAIL"), order = 115)
-    private static void whenEnchantingApoth(
-            Map<Enchantment, Integer> enchantments,
-            ItemStack stack,
-            CallbackInfo ci
+    @ModifyVariable(method = "set", at = @At("HEAD"), order = Integer.MAX_VALUE, argsOnly = true)
+    private static Map<Enchantment, Integer> removeWhenEnchanting(
+            Map<Enchantment, Integer> values
     ) {
-        processEnchantments(stack, (ench, compound) -> {
-            if (ench instanceof ConsumableEnchantment) stack.getEnchantments().remove(compound);});
+        for (Map.Entry<Enchantment, Integer> entry : values.entrySet()) {
+            Enchantment ench = entry.getKey();
+            if (ench instanceof ConsumableEnchantment) values.remove(ench);
+        }
+        return values;
     }
 }

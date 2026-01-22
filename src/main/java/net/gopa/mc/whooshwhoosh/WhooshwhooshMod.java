@@ -2,10 +2,9 @@ package net.gopa.mc.whooshwhoosh;
 
 import net.fabricmc.api.ModInitializer;
 import net.gopa.mc.whooshwhoosh.registry.EnchantmentsRegistry;
+import net.minecraft.util.math.random.Random;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import net.minecraft.util.math.random.Random;
 
 public class WhooshwhooshMod implements ModInitializer {
 

@@ -6,29 +6,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.registry.Registries;
-import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.BiConsumer;
 
 public final class EnchantmentUtil {
-
-    public static void processEnchantments(
-            ItemStack stack,
-            BiConsumer<Enchantment, NbtCompound> processor
-    ) {
-        NbtList enchantList = stack.getEnchantments();
-
-        for (int i = enchantList.size() - 1; i >= 0; i--) {
-            NbtCompound compound = enchantList.getCompound(i);
-            String enchId = compound.getString("id");
-            Enchantment ench = Registries.ENCHANTMENT.get(new Identifier(enchId));
-
-            if (ench != null) processor.accept(ench, compound);
-        }
-    }
 
     public static boolean hasEnchantment(NbtList enchNbtList, Enchantment targetEnch) {
         if (enchNbtList == null || enchNbtList.isEmpty()) return false;
