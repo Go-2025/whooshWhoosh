@@ -8,5 +8,13 @@
   "enchantment.whooshwhoosh.offering": "祭品",
   "enchantment.whooshwhoosh.offering.desc": "使物品变得相当脆弱，并在物品损坏时散落一些经验",
   "enchantment.whooshwhoosh.symbiosis": "共生",
-  "enchantment.whooshwhoosh.symbiosis.desc": "使背包内带有此附魔的物品互相共享耐久值"
+  "enchantment.whooshwhoosh.symbiosis.desc": "使背包内带有此附魔的物品互相共享耐久值",
+  "enchantment.whooshwhoosh.envenom": "涂毒",
+  "enchantment.whooshwhoosh.envenom.desc": "为目标追加几秒中毒效果",
+  "enchantment.whooshwhoosh.catalysis": "催化",
+  "enchantment.whooshwhoosh.catalysis.desc": "使受击者现有效果等级提升一级，并减少效果持续时间",
+  "enchantment.whooshwhoosh.weaken_strike": "削靡",
+  "enchantment.whooshwhoosh.weaken_strike.desc": "攻击有概率为目标施加虚弱效果",
+  "enchantment.whooshwhoosh.bone_shatter.name": "碎骨",
+  "enchantment.whooshwhoosh.bone_shatter.desc": "造成暴击时给予目标虚弱、缓慢和挖掘疲劳的效果"
 }

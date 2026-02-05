@@ -1,10 +1,36 @@
 package net.gopa.mc.whooshwhoosh.enchantment;
 
+import net.gopa.mc.whooshwhoosh.WhooshwhooshMod;
+import net.gopa.mc.whooshwhoosh.enchantment.interfaces.DeadRattle;
 import net.minecraft.enchantment.VanishingCurseEnchantment;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.ExperienceOrbEntity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 
-public class OfferingEnchantment extends VanishingCurseEnchantment {
+import java.util.function.Consumer;
+
+public class OfferingEnchantment extends VanishingCurseEnchantment implements DeadRattle {
     public OfferingEnchantment() {
-        super(Rarity.VERY_RARE, EquipmentSlot.values());
+        super(Rarity.COMMON, EquipmentSlot.values());
+    }
+
+    @Override
+    public void deadrattle(
+            ItemStack stack,
+            LivingEntity entity,
+            Consumer<LivingEntity> breakCallback
+    ) {
+        World world = entity.getWorld();
+        Vec3d basePos = entity.getPos();
+        int n = Math.min(stack.getEnchantments().size(), 200);
+
+        for (int i = 0; i < n; i++) {
+            int expAmount = WhooshwhooshMod.RANDOM.nextInt(3) + 4;
+            world.spawnEntity(new ExperienceOrbEntity(world,
+                    basePos.x, basePos.y, basePos.z, expAmount));
+        }
     }
 }

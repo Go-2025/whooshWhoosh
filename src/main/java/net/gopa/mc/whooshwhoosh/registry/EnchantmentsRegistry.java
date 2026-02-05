@@ -10,11 +10,25 @@ import net.minecraft.util.Identifier;
 import java.util.function.Supplier;
 
 public enum EnchantmentsRegistry {
+
+    // basic attributes
+
+    FINISHER("finisher", FinisherEnchantment::new),
+
+    // mechanisms
+
     APOTHEOSIS("apotheosis", ApotheosisEnchantment::new),
     LAUNCH("launch", LaunchEnchantment::new),
-    FINISHER("finisher", FinisherEnchantment::new),
+    SYMBIOSIS("symbiosis",SymbiosisEnchantment::new),
+    ENVENOM("envenom", EnvenomEnchantment::new),
+    CATALYSIS("catalysis", CatalysisEnchantment::new),
+    WEAKEN_STRIKE("weaken_strike", WeakenStrikeEnchantment::new),
+    BONE_SHATTER("bone_shatter", BoneShatterEnchantment::new),
+
+    // curse
+
     OFFERING("offering", OfferingEnchantment::new),
-    SYMBIOSIS("symbiosis",SymbiosisEnchantment::new);
+    ;
 
     private final String id;
     private final Supplier<? extends Enchantment> enchantmentSupplier;

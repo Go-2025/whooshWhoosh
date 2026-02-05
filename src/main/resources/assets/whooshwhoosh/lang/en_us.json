@@ -8,5 +8,13 @@
   "enchantment.whooshwhoosh.offering": "offering",
   "enchantment.whooshwhoosh.offering.desc": "Makes the item very fragile and drops experience when it breaks",
   "enchantment.whooshwhoosh.symbiosis": "symbiosis",
-  "enchantment.whooshwhoosh.symbiosis.desc": "Mutually shares durability among items in the inventory that have this enchantment"
+  "enchantment.whooshwhoosh.symbiosis.desc": "Mutually shares durability among items in the inventory that have this enchantment",
+  "enchantment.whooshwhoosh.envenom": "envenom",
+  "enchantment.whooshwhoosh.envenom.desc": "Applies poison to targets for several seconds when attacking",
+  "enchantment.whooshwhoosh.catalysis": "catalysis",
+  "enchantment.whooshwhoosh.catalysis.desc": "When attacking, raises the level of existing effects on targets by 1 and reduces their duration",
+  "enchantment.whooshwhoosh.weaken_strike": "weaken strike",
+  "enchantment.whooshwhoosh.weaken_strike.desc": "When attacking, has a chance to apply the weakness effect to enemies",
+  "enchantment.whooshwhoosh.bone_shatter.name": "bone shatter",
+  "enchantment.whooshwhoosh.bone_shatter.desc": "When landing a critical hit, applies Weakness, Slowness, and Mining Fatigue effects to the target"
 }

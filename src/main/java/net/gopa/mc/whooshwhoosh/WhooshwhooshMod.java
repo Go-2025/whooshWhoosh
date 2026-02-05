@@ -2,6 +2,7 @@ package net.gopa.mc.whooshwhoosh;
 
 import net.fabricmc.api.ModInitializer;
 import net.gopa.mc.whooshwhoosh.registry.EnchantmentsRegistry;
+import net.gopa.mc.whooshwhoosh.registry.ListenerRegistry;
 import net.minecraft.util.math.random.Random;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,5 +18,7 @@ public class WhooshwhooshMod implements ModInitializer {
     @Override
     public void onInitialize() {
         EnchantmentsRegistry.registerAll();
+        ListenerRegistry.registerAll();
+        WhooshwhooshMod.LOGGER.info("Whoosh whoosh mod initialized");
     }
 }

@@ -4,10 +4,16 @@
   "package": "net.gopa.mc.whooshwhoosh.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "ArrowEntityMixin",
+    "EntityAttackMixin",
+    "ExeDeadrattleMixin",
+    "FinisherEnchMixin",
+    "ItemStackDamageMixin",
+    "EntityDataSaverMixin",
     "OfferingEnchMixin",
+    "PlayerCriticalHitMixin",
     "SymbiosisEnchMixin",
-    "ApotheosisEnchMixin",
-    "ConsumableEnchMixin"
+    "accessors.PlayerEntityAccessorMixin"
   ],
   "injectors": {
     "defaultRequire": 1
