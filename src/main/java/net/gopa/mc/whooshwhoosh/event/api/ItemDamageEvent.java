@@ -5,7 +5,6 @@ import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.function.Consumer;
 
@@ -19,7 +18,7 @@ public interface ItemDamageEvent {
                         return result;
                     }
                 }
-                return ActionResult.PASS;
+                return ActionResult.SUCCESS;
             }));
 
     ActionResult interact(ItemStack stack, int amount, LivingEntity entity, Consumer<LivingEntity> breakCallback);

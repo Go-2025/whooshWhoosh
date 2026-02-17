@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.function.Consumer;
 
 @Mixin(ItemStack.class)
-public class ItemStackDamageMixin {
+public abstract class ItemStackDamageMixin {
     @Inject(
             method = "damage(ILnet/minecraft/entity/LivingEntity;Ljava/util/function/Consumer;)V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;damage(ILnet/minecraft/util/math/random/Random;Lnet/minecraft/server/network/ServerPlayerEntity;)Z"),

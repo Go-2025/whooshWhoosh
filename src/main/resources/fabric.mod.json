@@ -11,21 +11,17 @@
   "environment": "*",
   "entrypoints": {
     "fabric-datagen": [
-      "net.gopa.mc.whooshwhoosh.client.WhooshwhooshDataGenerator"
+      "net.gopa.mc.whooshwhoosh.WhooshwhooshDataGenerator"
     ],
     "client": [
-      "net.gopa.mc.whooshwhoosh.client.WhooshwhooshClient"
+      "net.gopa.mc.whooshwhoosh.WhooshwhooshClient"
     ],
     "main": [
       "net.gopa.mc.whooshwhoosh.WhooshwhooshMod"
     ]
   },
   "mixins": [
-    "whooshwhoosh.mixins.json",
-    {
-      "config": "whooshwhoosh.client.mixins.json",
-      "environment": "client"
-    }
+    "whooshwhoosh.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=${loader_version}",

@@ -18,7 +18,7 @@ public interface ItemBreakEvent {
                         return result;
                     }
                 }
-                return ActionResult.PASS;
+                return ActionResult.SUCCESS;
             });
 
     ActionResult interact(ItemStack stack, LivingEntity user, Consumer<LivingEntity> breakCallback);

@@ -1,28 +1,23 @@
 package net.gopa.mc.whooshwhoosh.mixin;
 
-import net.gopa.mc.whooshwhoosh.event.impl.ItemDamageListener;
 import net.gopa.mc.whooshwhoosh.registry.EnchantmentsRegistry;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
 
 import static net.gopa.mc.whooshwhoosh.util.EnchantmentUtil.getEnchItems;
-import static net.gopa.mc.whooshwhoosh.util.EnchantmentUtil.hasThisEnch;
+import static net.gopa.mc.whooshwhoosh.util.EnchantmentUtil.hasEnch;
 
 
 @Mixin(ItemStack.class)
@@ -76,7 +71,7 @@ public abstract class SymbiosisEnchMixin {
     private boolean canTrigger(LivingEntity entity) {
         if (entity instanceof ServerPlayerEntity) {
             NbtList enchantments = ((ItemStack) (Object) this).getEnchantments();
-            return hasThisEnch(enchantments, SYMBIOSIS_ENCH);
+            return hasEnch(enchantments, SYMBIOSIS_ENCH);
         }
         return false;
     }

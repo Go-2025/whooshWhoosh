@@ -1,7 +1,9 @@
 package net.gopa.mc.whooshwhoosh.enchantment;
 
-import net.gopa.mc.whooshwhoosh.enchantment.interfaces.DeadRattle;
+import net.gopa.mc.whooshwhoosh.WhooshwhooshMod;
+import net.gopa.mc.whooshwhoosh.enchantment.annotation.Trigger;
 import net.gopa.mc.whooshwhoosh.enchantment.interfaces.Triggerable;
+import net.gopa.mc.whooshwhoosh.enums.TriggerPoint;
 import net.gopa.mc.whooshwhoosh.registry.EnchantmentsRegistry;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
@@ -9,18 +11,20 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.ActionResult;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
 
 import static net.gopa.mc.whooshwhoosh.util.EnchantmentUtil.*;
 import static net.gopa.mc.whooshwhoosh.util.ItemStackUtil.destroyItem;
 
-public class SymbiosisEnchantment extends Enchantment implements DeadRattle, Triggerable {
+@Trigger(TriggerPoint.ON_ITEM_BREAK)
+public class SymbiosisEnchantment extends Enchantment implements Triggerable {
 
     public SymbiosisEnchantment() {
         super(Rarity.COMMON, EnchantmentTarget.BREAKABLE, EquipmentSlot.values());
@@ -50,36 +54,38 @@ public class SymbiosisEnchantment extends Enchantment implements DeadRattle, Tri
 //        }
 //    }
 
+
     @Override
-    public void deadrattle(
-            ItemStack stack,
-            LivingEntity entity,
-            Consumer<LivingEntity> breakCallback
-    ) {
-        final Enchantment SYMBIOSIS_ENCH = EnchantmentsRegistry.SYMBIOSIS.get();
-        if (!(entity instanceof ServerPlayerEntity player)) return;
+    public ActionResult onItemBreak(int level, ItemStack stack, LivingEntity entity, Consumer<LivingEntity> breakCallback) {
+        if (canTrigger(level) && entity instanceof ServerPlayerEntity player) {
+            Enchantment SYMBIOSIS_ENCH = EnchantmentsRegistry.SYMBIOSIS.get();
+            PlayerInventory inventory = player.getInventory();
+            List<ItemStack> symItems = getEnchItems(inventory, SYMBIOSIS_ENCH, true);
 
-        PlayerInventory inventory = player.getInventory();
-        List<ItemStack> symItems = getEnchItems(inventory, SYMBIOSIS_ENCH, true);
+            symItems.removeIf(item -> {
+                NbtList enchantments = item.getEnchantments();
+                if (item.equals(stack) || enchantments == null) return false;
 
-        symItems.removeIf(item -> {
-            NbtList enchantments = item.getEnchantments();
-            if (item.equals(stack) || enchantments == null) return false;
-
-            boolean processed = false;
-            for (NbtElement nbt : enchantments) {
-                Enchantment ench = getEnchByNbt(nbt);
-                if (!(ench instanceof SymbiosisEnchantment) && ench instanceof DeadRattle deadRattle) {
-                    deadRattle.onBreak(item, entity, breakCallback);
-                    processed = true;
+                boolean processed = false;
+                for (NbtElement value : enchantments) {
+                    Enchantment ench = getEnchByNbt((NbtCompound) value);
+                    if (!(ench instanceof SymbiosisEnchantment)
+                            && ench instanceof Triggerable triggerableEnch
+                            && TriggerPoint.ON_ITEM_BREAK.hasTriggerPoint(triggerableEnch)
+                    ) {
+                        WhooshwhooshMod.LOGGER.info("Processing Symbiosis enchantment");
+                        triggerableEnch.onItemBreak(level, item, entity, breakCallback);
+                        processed = true;
+                    }
                 }
-            }
 
-            if (processed) {
-                destroyItem(item, player, breakCallback);
-                return true;
-            }
-            return false;
-        });
+                if (processed) {
+                    destroyItem(item, player, breakCallback);
+                    return true;
+                }
+                return false;
+            });
+        }
+        return ActionResult.PASS;
     }
 }

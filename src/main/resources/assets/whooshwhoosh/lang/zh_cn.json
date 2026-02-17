@@ -15,6 +15,13 @@
   "enchantment.whooshwhoosh.catalysis.desc": "使受击者现有效果等级提升一级，并减少效果持续时间",
   "enchantment.whooshwhoosh.weaken_strike": "削靡",
   "enchantment.whooshwhoosh.weaken_strike.desc": "攻击有概率为目标施加虚弱效果",
-  "enchantment.whooshwhoosh.bone_shatter.name": "碎骨",
-  "enchantment.whooshwhoosh.bone_shatter.desc": "造成暴击时给予目标虚弱、缓慢和挖掘疲劳的效果"
+  "enchantment.whooshwhoosh.bone_shatter": "碎骨",
+  "enchantment.whooshwhoosh.bone_shatter.desc": "造成暴击时给予目标虚弱、缓慢和挖掘疲劳的效果",
+  "enchantment.whooshwhoosh.monarch_wings": "苍翼",
+  "enchantment.whooshwhoosh.monarch_wings.desc": "穿戴者能在空中进行二段跳",
+  "enchantment.whooshwhoosh.vault": "腾跃",
+  "enchantment.whooshwhoosh.vault.desc": "让取消潜行后的几秒会跳得更高",
+  "enchantment.whooshwhoosh.spellshot": "法术箭",
+  "enchantment.whooshwhoosh.spellshot.desc": "使箭矢造成法术伤害"
+
 }

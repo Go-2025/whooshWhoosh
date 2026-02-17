@@ -6,18 +6,19 @@ import net.minecraft.item.ItemStack;
 
 import java.util.function.Consumer;
 
-import static net.gopa.mc.whooshwhoosh.util.EnchantmentUtil.hasThisEnch;
+import static net.gopa.mc.whooshwhoosh.util.EnchantmentUtil.hasEnch;
 
+@Deprecated(since = "1.0.0")
 public interface DeadRattle {
 
-    void deadrattle(ItemStack stack, LivingEntity entity, Consumer<LivingEntity> breakCallback);
+    void deadrattle(int level, ItemStack stack, LivingEntity entity, Consumer<LivingEntity> breakCallback);
 
-    default void onBreak(ItemStack stack, LivingEntity entity, Consumer<LivingEntity> breakCallback) {
+    default void onBreak(int level, ItemStack stack, LivingEntity entity, Consumer<LivingEntity> breakCallback) {
         if (!canTrigger(stack)) return;
-        deadrattle(stack, entity, breakCallback);
+        deadrattle(level, stack, entity, breakCallback);
     }
 
     default boolean canTrigger(ItemStack stack) {
-        return hasThisEnch(stack.getEnchantments(), (Enchantment) this);
+        return hasEnch(stack.getEnchantments(), (Enchantment) this);
     }
 }

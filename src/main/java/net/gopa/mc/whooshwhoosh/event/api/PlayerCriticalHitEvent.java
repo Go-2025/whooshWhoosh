@@ -3,7 +3,6 @@ package net.gopa.mc.whooshwhoosh.event.api;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.util.ActionResult;
 
 public interface PlayerCriticalHitEvent {
@@ -16,7 +15,7 @@ public interface PlayerCriticalHitEvent {
                         return result;
                     }
                 }
-                return ActionResult.PASS;
+                return ActionResult.SUCCESS;
             });
 
     ActionResult interact(LivingEntity target, LivingEntity attacker);

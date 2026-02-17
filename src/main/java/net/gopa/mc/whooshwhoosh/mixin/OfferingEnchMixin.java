@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
-import static net.gopa.mc.whooshwhoosh.util.EnchantmentUtil.hasThisEnch;
+import static net.gopa.mc.whooshwhoosh.util.EnchantmentUtil.hasEnch;
 
 @Mixin(ItemStack.class)
 public abstract class OfferingEnchMixin {
@@ -32,7 +32,7 @@ public abstract class OfferingEnchMixin {
     private int addRandToDamageWhenWornOut(int amount) {
         ItemStack stack = (ItemStack) (Object) this;
 
-        if (!hasThisEnch(stack.getEnchantments(), OFFERING_ENCH)) return amount;
+        if (!hasEnch(stack.getEnchantments(), OFFERING_ENCH)) return amount;
 
         int maxDamage = stack.getMaxDamage();
         Float2IntFunction getIntDamage = (float n) -> (int) Math.max(2f, maxDamage * n);

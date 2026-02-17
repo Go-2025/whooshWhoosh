@@ -1,21 +1,21 @@
 package net.gopa.mc.whooshwhoosh.mixin;
 
-import net.gopa.mc.whooshwhoosh.WhooshwhooshMod;
-import net.gopa.mc.whooshwhoosh.event.api.EntityAttackEvent;
+import net.gopa.mc.whooshwhoosh.event.api.EntityDamageEvent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
+import net.minecraft.util.ActionResult;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin({LivingEntity.class, PlayerEntity.class})
-public abstract class EntityAttackMixin {
+public abstract class EntityDamageMixin {
 
-    @Inject(method = "damage", at = @At("TAIL"))
+    @Inject(method = "damage", at = @At("TAIL"), cancellable = true)
     private void onAttackStart(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         Entity entity = source.getSource();
         LivingEntity attacker =
@@ -25,7 +25,7 @@ public abstract class EntityAttackMixin {
                 ? (LivingEntity) arrowEntity.getOwner()
                 : null;
         if (attacker == null || attacker.getWorld().isClient()) return;
-        EntityAttackEvent.EVENT.invoker().interact(
-                (LivingEntity) (Object) this, attacker, source);
+        ActionResult result = EntityDamageEvent.EVENT.invoker().interact((LivingEntity) (Object) this, attacker, source);
+        if (result != ActionResult.PASS) cir.setReturnValue(result.isAccepted());
     }
 }

@@ -1,5 +1,7 @@
 package net.gopa.mc.whooshwhoosh.enchantment;
 
+import net.gopa.mc.whooshwhoosh.enchantment.annotation.Trigger;
+import net.gopa.mc.whooshwhoosh.enums.TriggerPoint;
 import net.gopa.mc.whooshwhoosh.enchantment.interfaces.Triggerable;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
@@ -11,22 +13,27 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
+import net.minecraft.util.ActionResult;
 
+@Trigger(TriggerPoint.ON_TARGET_DAMAGE)
 public class WeakenStrikeEnchantment extends Enchantment implements Triggerable {
     public WeakenStrikeEnchantment() {
         super(Rarity.COMMON, EnchantmentTarget.WEAPON, EquipmentSlot.values());
     }
 
     @Override
-    public void onTargetDamage(int level, LivingEntity target, Entity attacker, DamageSource damageSource) {
-        target.addStatusEffect(new StatusEffectInstance(
-                StatusEffects.WEAKNESS,
-                (int) (1.4 * Math.sqrt(level + 1) * 20),
-                level - 1));
+    public ActionResult onTargetDamage(int level, LivingEntity target, Entity attacker, DamageSource damageSource) {
+        if (canTrigger(level)) {
+            target.addStatusEffect(new StatusEffectInstance(
+                    StatusEffects.WEAKNESS,
+                    (int) (1.4 * Math.sqrt(level + 1) * 20),
+                    level - 1));
+        }
+        return ActionResult.PASS;
     }
 
     @Override
-    public Double getProbability(int level) {
+    public double getProbability(int level) {
         return 0.34d;
     }
 

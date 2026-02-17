@@ -24,6 +24,10 @@ public enum EnchantmentsRegistry {
     CATALYSIS("catalysis", CatalysisEnchantment::new),
     WEAKEN_STRIKE("weaken_strike", WeakenStrikeEnchantment::new),
     BONE_SHATTER("bone_shatter", BoneShatterEnchantment::new),
+//    MONARCH_WINGS("monarch_wings", MonarchWingsEnchantment::new),
+    VAULT("vault", VaultEnchantment::new),
+    SPELLSHOT("spellshot", SpellshotEnchantment::new),
+    MARK("mark", MarkEnchantment::new),
 
     // curse
 

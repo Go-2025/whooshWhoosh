@@ -1,28 +1,28 @@
 package net.gopa.mc.whooshwhoosh.enchantment;
 
 import net.gopa.mc.whooshwhoosh.WhooshwhooshMod;
-import net.gopa.mc.whooshwhoosh.enchantment.interfaces.DeadRattle;
+import net.gopa.mc.whooshwhoosh.enchantment.annotation.Trigger;
+import net.gopa.mc.whooshwhoosh.enchantment.interfaces.Triggerable;
+import net.gopa.mc.whooshwhoosh.enums.TriggerPoint;
 import net.minecraft.enchantment.VanishingCurseEnchantment;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.ExperienceOrbEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import java.util.function.Consumer;
 
-public class OfferingEnchantment extends VanishingCurseEnchantment implements DeadRattle {
+@Trigger(TriggerPoint.ON_ITEM_BREAK)
+public class OfferingEnchantment extends VanishingCurseEnchantment implements Triggerable {
     public OfferingEnchantment() {
         super(Rarity.COMMON, EquipmentSlot.values());
     }
 
     @Override
-    public void deadrattle(
-            ItemStack stack,
-            LivingEntity entity,
-            Consumer<LivingEntity> breakCallback
-    ) {
+    public ActionResult onItemBreak(int level, ItemStack stack, LivingEntity entity, Consumer<LivingEntity> breakCallback) {
         World world = entity.getWorld();
         Vec3d basePos = entity.getPos();
         int n = Math.min(stack.getEnchantments().size(), 200);
@@ -32,5 +32,6 @@ public class OfferingEnchantment extends VanishingCurseEnchantment implements De
             world.spawnEntity(new ExperienceOrbEntity(world,
                     basePos.x, basePos.y, basePos.z, expAmount));
         }
+        return ActionResult.PASS;
     }
 }

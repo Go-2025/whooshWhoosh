@@ -6,10 +6,10 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.util.ActionResult;
 
-public interface EntityAttackEvent {
-    Event<EntityAttackEvent> EVENT = EventFactory.createArrayBacked(EntityAttackEvent.class,
+public interface EntityDamageEvent {
+    Event<EntityDamageEvent> EVENT = EventFactory.createArrayBacked(EntityDamageEvent.class,
             listeners -> (target, attacker, damageSource) -> {
-                for (EntityAttackEvent event : listeners) {
+                for (EntityDamageEvent event : listeners) {
                     ActionResult result = event.interact(target, attacker, damageSource);
 
                     if (result != ActionResult.PASS) {

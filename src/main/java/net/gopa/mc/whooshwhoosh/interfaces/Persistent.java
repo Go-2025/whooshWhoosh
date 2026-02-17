@@ -1,4 +1,4 @@
-package net.gopa.mc.whooshwhoosh.enchantment.interfaces;
+package net.gopa.mc.whooshwhoosh.interfaces;
 
 import net.minecraft.nbt.NbtCompound;
 
