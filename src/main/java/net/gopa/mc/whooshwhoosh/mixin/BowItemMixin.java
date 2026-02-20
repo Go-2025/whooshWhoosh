@@ -1,6 +1,6 @@
 package net.gopa.mc.whooshwhoosh.mixin;
 
-import net.gopa.mc.whooshwhoosh.toolkit.data.DataSaver;
+import net.gopa.mc.whooshwhoosh.toolkit.dataTool.DataSaver;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BowItem;

@@ -1,15 +1,20 @@
 package net.gopa.mc.whooshwhoosh.Handler;
 
+import net.gopa.mc.whooshwhoosh.WhooshwhooshMod;
 import net.gopa.mc.whooshwhoosh.enchantment.annotation.Trigger;
 import net.gopa.mc.whooshwhoosh.enchantment.interfaces.Triggerable;
 import net.gopa.mc.whooshwhoosh.enums.TriggerPoint;
+import net.gopa.mc.whooshwhoosh.mixin.accessors.EnchantmentAccessorMixin;
+import net.gopa.mc.whooshwhoosh.registry.EnchantmentsRegistry;
+import net.gopa.mc.whooshwhoosh.toolkit.scan.ClassScanner;
+import net.gopa.mc.whooshwhoosh.util.EnchantmentUtil;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.util.ActionResult;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.*;
-import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class TriggerHandler {
 
@@ -17,63 +22,41 @@ public class TriggerHandler {
     private static final Set<String> paths = Set.of(
             "enchantment"
     );
+    public static final List<Class<?>> TRIGGERS = getTriggerMap();
+    public static final Map<TriggerPoint, Class<?>[]> POINT_MAP = createTriggerPointMap();
 
-    public static final Set<Class<? extends Triggerable>> TRIGGER_MAP = getTriggerMap();
-
-    private TriggerHandler() {
-    }
-
-    private static Set<Class<? extends Triggerable>> getTriggerMap() {
-        Set<Class<? extends Triggerable>> set = new HashSet<>();
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-
+    private static List<Class<?>> getTriggerMap() {
+        List<Class<?>> lst = new ArrayList<>();
         try {
-            Enumeration<URL> resources = classLoader.getResources(packagePath.replace('.', '/'));
-            while (resources.hasMoreElements()) {
-                URL url = resources.nextElement();
-                File dir = new File(url.getFile());
-                scanDirectory(dir, packagePath, set, paths);
+            for (String path : paths) {
+                List<Class<?>> classes = ClassScanner.findClassesInPackage(packagePath + "." + path, TriggerHandler::isTriggered);
+                lst.addAll(classes);
             }
-        } catch (IOException ignored) {}
-        return set;
+        } catch (IOException | ClassNotFoundException e) {
+            WhooshwhooshMod.LOGGER.warn("Error loading triggers", e);
+        }
+        return lst;
     }
 
-    private static void scanDirectory(File dir, String packageName, Set<Class<? extends Triggerable>> set) {
-        for (File file : Objects.requireNonNull(dir.listFiles())) {
-            if (file.isDirectory() && !file.getName().equals("mixin")) {
-                scanDirectory(file, packageName + "." + file.getName(), set);
-            } else if (file.getName().endsWith(".class")) {
-                String className = packageName + '.' + file.getName().replace(".class", "");
-                putClassName(set, className);
+    private static Map<TriggerPoint, Class<?>[]> createTriggerPointMap() {
+        Map<TriggerPoint, Class<?>[]> map = new HashMap<>();
+
+        List<TriggerPoint> values = new ArrayList<>(List.of(TriggerPoint.values()));
+        values.remove(TriggerPoint.OTHER);
+
+        for (TriggerPoint point : values) {
+            List<Class<?>> classes = new ArrayList<>();
+            for (Class<?> cls : TriggerHandler.TRIGGERS) {
+                if (point.hasTriggerPoint(cls)) {
+                    classes.add(cls);
+                }
             }
+            map.put(point, classes.toArray(Class<?>[]::new));
         }
-    }
-
-    private static void scanDirectory(File dir, String packageName, Set<Class<? extends Triggerable>> set, Set<String> paths) {
-        for (String path : paths) {
-            File subDir = new File(dir, path);
-            if (subDir.exists() && subDir.isDirectory()) {
-                scanDirectory(subDir, packageName + "." + path, set);
-            }
-        }
-    }
-
-    private static void putClassName(Set<Class<? extends Triggerable>> set, String className) {
-        try {
-            Class<?> cls = Class.forName(className);
-            if (isTriggered(cls)) set.add(cls.asSubclass(Triggerable.class));
-        } catch (ClassNotFoundException ignored) {
-
-        }
+        return map;
     }
 
     private static boolean isTriggered(Class<?> cls) {
         return Triggerable.class.isAssignableFrom(cls) && cls.isAnnotationPresent(Trigger.class);
-    }
-
-    public static List<Class<? extends Triggerable>> getTriggerAtPoint(TriggerPoint point) {
-        return TRIGGER_MAP.stream()
-                .filter(cls -> Arrays.asList(cls.getAnnotation(Trigger.class).value()).contains(point))
-                .toList();
     }
 }

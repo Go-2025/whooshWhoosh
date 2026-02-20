@@ -3,7 +3,7 @@ package net.gopa.mc.whooshwhoosh.mixin;
 import net.gopa.mc.whooshwhoosh.enchantment.MarkEnchantment;
 import net.gopa.mc.whooshwhoosh.enchantment.interfaces.Stored;
 import net.gopa.mc.whooshwhoosh.registry.EnchantmentsRegistry;
-import net.gopa.mc.whooshwhoosh.toolkit.data.DataSaver;
+import net.gopa.mc.whooshwhoosh.toolkit.dataTool.DataSaver;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.projectile.ArrowEntity;
@@ -28,10 +28,12 @@ public abstract class MarkEnchMixin {
 
                 String key = MarkEnchantment.KEY2;
                 if (data.contains(key)) {
-                    int lvl = data.getInt(key);
-                    arrow.setDamage(arrow.getDamage() * (lvl + 5) / 4);
+                    if (target.hasStatusEffect(StatusEffects.GLOWING)) {
+                        int lvl = data.getInt(key);
 
-                    target.removeStatusEffect(StatusEffects.GLOWING);
+                        arrow.setDamage(arrow.getDamage() * (lvl + 5) / 4);
+                        target.removeStatusEffect(StatusEffects.GLOWING);
+                    }
                     saver.remove(key).save();
                 }
             }

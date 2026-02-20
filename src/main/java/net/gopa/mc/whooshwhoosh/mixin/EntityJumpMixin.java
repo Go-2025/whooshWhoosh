@@ -1,6 +1,6 @@
 package net.gopa.mc.whooshwhoosh.mixin;
 
-import net.gopa.mc.whooshwhoosh.event.impl.EntityJumpListener;
+import net.gopa.mc.whooshwhoosh.event.api.EntityJumpEvent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -14,6 +14,6 @@ public abstract class EntityJumpMixin {
     @Inject(method = "jump", at = @At("HEAD"))
     private void jump(CallbackInfo ci) {
         LivingEntity self = (LivingEntity) (Object) this;
-        EntityJumpListener.EVENT.invoker().interact(self);
+        EntityJumpEvent.EVENT.invoker().interact(self);
     }
 }

@@ -7,6 +7,7 @@ import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.util.ActionResult;
 
 public interface ArrowHitEvent {
+
     Event<ArrowHitEvent> EVENT = EventFactory.createArrayBacked(ArrowHitEvent.class,
             listeners -> (arrow, target) -> {
                 for (ArrowHitEvent event : listeners) {

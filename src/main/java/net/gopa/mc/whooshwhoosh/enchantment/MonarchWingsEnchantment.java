@@ -4,7 +4,7 @@ import net.gopa.mc.whooshwhoosh.enchantment.annotation.Trigger;
 import net.gopa.mc.whooshwhoosh.enchantment.interfaces.Stored;
 import net.gopa.mc.whooshwhoosh.enchantment.interfaces.Triggerable;
 import net.gopa.mc.whooshwhoosh.enums.TriggerPoint;
-import net.gopa.mc.whooshwhoosh.toolkit.data.DataSaver;
+import net.gopa.mc.whooshwhoosh.toolkit.dataTool.DataSaver;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.enchantment.Enchantment;
@@ -18,7 +18,7 @@ import net.minecraft.item.ElytraItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 
-@Trigger(TriggerPoint.ON_TARGET_DAMAGE)
+@Trigger(TriggerPoint.ON_ENTITY_DAMAGE)
 public class MonarchWingsEnchantment extends Enchantment implements Stored, Triggerable {
 
     private static final String KEY = "jump_count";
@@ -28,13 +28,12 @@ public class MonarchWingsEnchantment extends Enchantment implements Stored, Trig
     }
 
     @Override
-    public ActionResult onTargetDamage(int level, LivingEntity target, Entity attacker, DamageSource damageSource) {
+    public ActionResult onTargetDamage(int level, LivingEntity source, Entity attacker, DamageSource damageSource) {
         if (canTrigger(level)) {
             ClientPlayerEntity p = MinecraftClient.getInstance().player;
             if (p != null) {
                 PlayerEntity player = p.getWorld().getPlayerByUuid(attacker.getUuid());
                 DataSaver saver = getDataSaver(attacker);
-//                WhooshwhooshMod.LOGGER.info("{}", nbt.getInt(getKey()));
                 attacker.addVelocity(0, Math.abs(attacker.getVelocity().y) + 0.5, 0);
                 saver.putInt(KEY, 0).save();
             }

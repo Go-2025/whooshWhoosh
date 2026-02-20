@@ -1,4 +1,4 @@
-package net.gopa.mc.whooshwhoosh.toolkit.data;
+package net.gopa.mc.whooshwhoosh.toolkit.dataTool;
 
 import net.gopa.mc.whooshwhoosh.interfaces.Persistent;
 import net.minecraft.entity.Entity;
@@ -52,9 +52,10 @@ public class DataSaver {
 
     public DataSaver jumpTo(String key) {
         if (data.contains(key, NbtElement.COMPOUND_TYPE)) {
+            save();
+
             data = data.getCompound(key);
             applyPath(key);
-            save();
         }
         return this;
     }
@@ -68,6 +69,8 @@ public class DataSaver {
     }
 
     public DataSaver returnRoot() {
+        save();
+
         data = entity.getData();
         return this;
     }

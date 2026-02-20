@@ -56,8 +56,8 @@ public class SymbiosisEnchantment extends Enchantment implements Triggerable {
 
 
     @Override
-    public ActionResult onItemBreak(int level, ItemStack stack, LivingEntity entity, Consumer<LivingEntity> breakCallback) {
-        if (canTrigger(level) && entity instanceof ServerPlayerEntity player) {
+    public ActionResult onItemBreak(int level, LivingEntity source, ItemStack stack, Consumer<LivingEntity> breakCallback) {
+        if (canTrigger(level) && source instanceof ServerPlayerEntity player) {
             Enchantment SYMBIOSIS_ENCH = EnchantmentsRegistry.SYMBIOSIS.get();
             PlayerInventory inventory = player.getInventory();
             List<ItemStack> symItems = getEnchItems(inventory, SYMBIOSIS_ENCH, true);
@@ -74,7 +74,7 @@ public class SymbiosisEnchantment extends Enchantment implements Triggerable {
                             && TriggerPoint.ON_ITEM_BREAK.hasTriggerPoint(triggerableEnch)
                     ) {
                         WhooshwhooshMod.LOGGER.info("Processing Symbiosis enchantment");
-                        triggerableEnch.onItemBreak(level, item, entity, breakCallback);
+                        triggerableEnch.onItemBreak(level, source, item, breakCallback);
                         processed = true;
                     }
                 }

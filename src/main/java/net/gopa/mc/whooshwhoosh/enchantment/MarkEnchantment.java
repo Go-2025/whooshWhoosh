@@ -5,7 +5,7 @@ import net.gopa.mc.whooshwhoosh.enchantment.annotation.Trigger;
 import net.gopa.mc.whooshwhoosh.enchantment.interfaces.Stored;
 import net.gopa.mc.whooshwhoosh.enchantment.interfaces.Triggerable;
 import net.gopa.mc.whooshwhoosh.enums.TriggerPoint;
-import net.gopa.mc.whooshwhoosh.toolkit.data.DataSaver;
+import net.gopa.mc.whooshwhoosh.toolkit.dataTool.DataSaver;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.Entity;
@@ -31,7 +31,7 @@ public class MarkEnchantment extends Enchantment implements Stored, Triggerable 
     }
 
     @Override
-    public ActionResult onArrowHit(int level, ArrowEntity arrow, LivingEntity target) {
+    public ActionResult onArrowHit(int level, LivingEntity target, ArrowEntity arrow) {
         if (canTrigger(level)) {
             Entity attacker = arrow.getOwner();
             if (attacker != null) {

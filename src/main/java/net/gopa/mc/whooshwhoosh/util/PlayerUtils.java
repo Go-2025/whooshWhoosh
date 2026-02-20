@@ -15,6 +15,10 @@ public final class PlayerUtils {
         return player.getAttackCooldownProgress(0.5F) > 0.9F;
     }
 
+    public static float getAttackCDProgress(PlayerEntity player) {
+        return player.getAttackCooldownProgress(0.5F);
+    }
+
     public static boolean isCritical(LivingEntity attacker, LivingEntity target) {
         if (attacker instanceof PlayerEntity player) {
             boolean f = isAttackCooledDown(player)

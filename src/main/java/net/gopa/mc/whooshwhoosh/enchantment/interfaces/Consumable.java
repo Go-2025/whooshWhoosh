@@ -9,10 +9,5 @@ import java.util.Map;
  */
 public interface Consumable {
 
-    /**
-     *
-     * @param values
-     * @param self
-     */
     void consume(Map<Enchantment, Integer> values, Enchantment self);
 }

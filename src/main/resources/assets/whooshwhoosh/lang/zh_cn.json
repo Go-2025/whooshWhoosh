@@ -22,6 +22,9 @@
   "enchantment.whooshwhoosh.vault": "腾跃",
   "enchantment.whooshwhoosh.vault.desc": "让取消潜行后的几秒会跳得更高",
   "enchantment.whooshwhoosh.spellshot": "法术箭",
-  "enchantment.whooshwhoosh.spellshot.desc": "使箭矢造成法术伤害"
-
+  "enchantment.whooshwhoosh.spellshot.desc": "使箭矢造成法术伤害",
+  "enchantment.whooshwhoosh.mark": "标记",
+  "enchantment.whooshwhoosh.mark.desc": "标记目标，射击该目标造成更多伤害",
+  "enchantment.whooshwhoosh.sacrificial_strike": "祭血",
+  "enchantment.whooshwhoosh.sacrificial_strike.desc": "消耗血量造成额外伤害"
 }

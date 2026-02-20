@@ -20,6 +20,7 @@ public abstract class PlayerCriticalHitMixin {
     private void onAttack(Entity target, CallbackInfo ci) {
         PlayerEntity player = (PlayerEntity) (Object) this;
         if (target instanceof LivingEntity livingTarget) {
+
             if (PlayerUtils.isCritical(player, livingTarget)) {
                 PlayerCriticalHitEvent.EVENT.invoker().interact(livingTarget, player);
             }

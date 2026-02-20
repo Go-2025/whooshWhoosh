@@ -1,7 +1,7 @@
 package net.gopa.mc.whooshwhoosh.enchantment.interfaces;
 
 import net.gopa.mc.whooshwhoosh.WhooshwhooshMod;
-import net.gopa.mc.whooshwhoosh.toolkit.data.DataSaver;
+import net.gopa.mc.whooshwhoosh.toolkit.dataTool.DataSaver;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NbtCompound;
 

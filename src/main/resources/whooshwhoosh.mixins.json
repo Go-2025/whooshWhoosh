@@ -6,6 +6,7 @@
   "mixins": [
     "ArrowHitMixin",
     "BowItemMixin",
+    "EntityAttackMixin",
     "EntityDamageMixin",
     "EntityDataSaverMixin",
     "EntityJumpMixin",
@@ -17,9 +18,10 @@
     "MonarchWingsEnchMixin",
     "OfferingEnchMixin",
     "PlayerCriticalHitMixin",
+    "SacrificialStrikeEnchMixin",
     "SymbiosisEnchMixin",
     "VaultEnchMixin",
-    "accessors.PlayerEntityAccessorMixin"
+    "accessors.EnchantmentAccessorMixin"
   ],
   "injectors": {
     "defaultRequire": 1

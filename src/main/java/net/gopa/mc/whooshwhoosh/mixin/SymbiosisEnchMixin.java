@@ -23,7 +23,6 @@ import static net.gopa.mc.whooshwhoosh.util.EnchantmentUtil.hasEnch;
 @Mixin(ItemStack.class)
 public abstract class SymbiosisEnchMixin {
 
-    @Unique
     private static final Enchantment SYMBIOSIS_ENCH = EnchantmentsRegistry.SYMBIOSIS.get();
 
     @Inject(
@@ -44,9 +43,7 @@ public abstract class SymbiosisEnchMixin {
         damage(symItems, player, amount, symItems.size(), ci);
     }
 
-
-    @Unique
-    private void damage(
+    private static void damage(
             List<ItemStack> symItems,
             ServerPlayerEntity player,
             int amount,
@@ -67,7 +64,6 @@ public abstract class SymbiosisEnchMixin {
         }
     }
 
-    @Unique
     private boolean canTrigger(LivingEntity entity) {
         if (entity instanceof ServerPlayerEntity) {
             NbtList enchantments = ((ItemStack) (Object) this).getEnchantments();
@@ -76,7 +72,6 @@ public abstract class SymbiosisEnchMixin {
         return false;
     }
 
-    @Unique
     private static List<ItemStack> getSymItems(ServerPlayerEntity player) {
         return getEnchItems(player.getInventory(), SYMBIOSIS_ENCH, true);
     }

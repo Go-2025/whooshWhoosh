@@ -1,6 +1,6 @@
 package net.gopa.mc.whooshwhoosh.mixin;
 
-import net.gopa.mc.whooshwhoosh.event.impl.ItemDamageListener;
+import net.gopa.mc.whooshwhoosh.event.api.ItemDamageEvent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
@@ -20,6 +20,6 @@ public abstract class ItemStackDamageMixin {
     private void onDamage(
             int amount, LivingEntity entity, Consumer<LivingEntity> breakCallback, CallbackInfo ci
     ) {
-        ItemDamageListener.EVENT.invoker().interact((ItemStack) (Object) this, amount, entity, breakCallback);
+        ItemDamageEvent.EVENT.invoker().interact((ItemStack) (Object) this, amount, entity, breakCallback);
     }
 }

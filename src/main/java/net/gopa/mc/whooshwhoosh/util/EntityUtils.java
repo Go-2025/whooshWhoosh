@@ -1,10 +1,13 @@
 package net.gopa.mc.whooshwhoosh.util;
 
-import net.gopa.mc.whooshwhoosh.toolkit.data.DataSaver;
+import net.gopa.mc.whooshwhoosh.toolkit.dataTool.DataSaver;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+
+import java.util.List;
+import java.util.stream.Stream;
 
 public final class EntityUtils {
 
@@ -15,5 +18,14 @@ public final class EntityUtils {
         return DataSaver.of(entity)
                 .getData()
                 .getFloat("last_bow_pull_progress");
+    }
+
+    public static List<ItemStack> getEquippedItems(Entity entity, EquipmentSlot... slots) {
+        if (entity instanceof LivingEntity livingEntity) {
+            return Stream.of(slots)
+                    .map(livingEntity::getEquippedStack)
+                    .toList();
+        }
+        return List.of();
     }
 }

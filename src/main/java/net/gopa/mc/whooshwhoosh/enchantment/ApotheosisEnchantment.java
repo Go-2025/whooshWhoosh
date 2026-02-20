@@ -11,6 +11,8 @@ import java.util.Map;
 
 public class ApotheosisEnchantment extends Enchantment implements Consumable {
 
+//    public static final ApotheosisEnchantment INSTANCE = new ApotheosisEnchantment();
+
     public ApotheosisEnchantment() {
         super(Rarity.VERY_RARE, EnchantmentTarget.VANISHABLE, EquipmentSlot.values());
     }

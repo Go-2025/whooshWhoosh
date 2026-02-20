@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 
 public final class EnchantmentUtil {
@@ -78,20 +77,25 @@ public final class EnchantmentUtil {
         return ActionResult.PASS;
     }
 
-    public static ActionResult processEnch(Iterator<ItemStack> stackIter, BiFunction<Enchantment, Integer, ActionResult> processor) {
-        while (stackIter.hasNext()) {
-            ItemStack stack = stackIter.next();
+    public static ActionResult processEnch(Iterator<ItemStack> stacks, BiFunction<Enchantment, Integer, ActionResult> processor) {
+        while (stacks.hasNext()) {
+            ItemStack stack = stacks.next();
             ActionResult result = processEnch(stack, processor);
             if (!result.equals(ActionResult.PASS)) return result;
         }
         return ActionResult.PASS;
     }
 
-    public static ActionResult processEnch(List<ItemStack> stackList, BiFunction<Enchantment, Integer, ActionResult> processor) {
-        for (ItemStack stack : stackList) {
-            ActionResult result = processEnch(stack, processor);
-            if (!result.equals(ActionResult.PASS)) return result;
+    public static ActionResult processEnch(List<ItemStack> stacks, BiFunction<Enchantment, Integer, ActionResult> processor) {
+        return processEnch(stacks.iterator(), processor);
+    }
+
+    public static Enchantment getEnchByClass(Class<?> cls) {
+        for (Enchantment ench : Registries.ENCHANTMENT) {
+            if (ench.getClass().equals(cls)) {
+                return ench;
+            }
         }
-        return ActionResult.PASS;
+        return null;
     }
 }

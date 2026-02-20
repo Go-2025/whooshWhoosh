@@ -1,16 +1,13 @@
 package net.gopa.mc.whooshwhoosh.enchantment;
 
-import net.gopa.mc.whooshwhoosh.WhooshwhooshMod;
 import net.gopa.mc.whooshwhoosh.enchantment.annotation.Trigger;
 import net.gopa.mc.whooshwhoosh.enchantment.interfaces.Cooldown;
 import net.gopa.mc.whooshwhoosh.enchantment.interfaces.Triggerable;
 import net.gopa.mc.whooshwhoosh.enums.TriggerPoint;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
@@ -19,15 +16,15 @@ import net.minecraft.util.ActionResult;
 
 import java.util.Optional;
 
-@Trigger(TriggerPoint.ON_TARGET_DAMAGE)
+@Trigger(TriggerPoint.ON_ATTACK)
 public class EnvenomEnchantment extends Enchantment implements Cooldown, Triggerable {
     public EnvenomEnchantment() {
         super(Rarity.UNCOMMON, EnchantmentTarget.WEAPON, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
     }
 
     @Override
-    public ActionResult onTargetDamage(int level, LivingEntity target, Entity attacker, DamageSource damageSource) {
-        if (canTrigger(attacker, level)) {
+    public ActionResult onAttack(int level, LivingEntity source, LivingEntity target) {
+        if (canTrigger(source, level)) {
             StatusEffectInstance existingEffect = target.getStatusEffect(StatusEffects.POISON);
 
             int newDuration = level * 30 + Optional.ofNullable(existingEffect)
@@ -38,9 +35,8 @@ public class EnvenomEnchantment extends Enchantment implements Cooldown, Trigger
                     .orElse(0);
 
             target.addStatusEffect(new StatusEffectInstance(
-                    StatusEffects.POISON, newDuration, newAmplifier
-            ));
-            refreshCD(attacker);
+                    StatusEffects.POISON, newDuration, newAmplifier));
+            refreshCD(source);
         }
         return ActionResult.PASS;
     }

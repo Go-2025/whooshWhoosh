@@ -21,7 +21,7 @@ public class CatalysisEnchantment extends Enchantment implements Triggerable {
     }
 
     @Override
-    public ActionResult onArrowHit(int level, ArrowEntity arrow, LivingEntity target) {
+    public ActionResult onArrowHit(int level, LivingEntity target, ArrowEntity arrow) {
         if (canTrigger(level)) {
             for (StatusEffectInstance effect : target.getStatusEffects()) {
                 int oldDuration = effect.getDuration();

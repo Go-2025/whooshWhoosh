@@ -12,7 +12,7 @@ public class VaultEnchantment extends Enchantment {
         super(Rarity.COMMON, EnchantmentTarget.ARMOR_FEET, new EquipmentSlot[]{EquipmentSlot.FEET});
     }
 
-    public static void onOffSneak(int level, PlayerEntity self) {
+    public void onOffSneak(int level, PlayerEntity self) {
         int duration = 10;
         int amplifier = level * 2;
         self.addStatusEffect(new StatusEffectInstance(

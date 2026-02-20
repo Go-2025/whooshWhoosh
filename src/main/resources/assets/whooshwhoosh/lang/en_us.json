@@ -22,5 +22,9 @@
   "enchantment.whooshwhoosh.vault": "vault",
   "enchantment.whooshwhoosh.vault.desc": "After exiting sneak mode, grants increased jump height for several seconds",
   "enchantment.whooshwhoosh.spellshot": "spellshot",
-  "enchantment.whooshwhoosh.spellshot.desc": "When shot, arrows deal spell damage"
+  "enchantment.whooshwhoosh.spellshot.desc": "When shot, arrows deal spell damage",
+  "enchantment.whooshwhoosh.mark": "mark",
+  "enchantment.whooshwhoosh.mark.desc": "Marks a target; shots at the marked target deal increased damage",
+  "enchantment.whooshwhoosh.sacrificial_strike": "sacrificial strike",
+  "enchantment.whooshwhoosh.sacrificial_strike.desc": "When attacking, sacrifices own health to deal additional damage"
 }

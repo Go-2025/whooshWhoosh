@@ -28,6 +28,8 @@ public enum EnchantmentsRegistry {
     VAULT("vault", VaultEnchantment::new),
     SPELLSHOT("spellshot", SpellshotEnchantment::new),
     MARK("mark", MarkEnchantment::new),
+    SACRIFICIAL_STRIKE("sacrificial_strike", SacrificialStrikeEnchantment::new),
+    ELASTIC("elastic", ElasticEnchantment::new),
 
     // curse
 

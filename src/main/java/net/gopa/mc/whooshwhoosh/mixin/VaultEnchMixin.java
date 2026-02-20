@@ -27,7 +27,7 @@ public abstract class VaultEnchMixin {
 
         if (!currentSneak && lastSneakState) {
             WhooshwhooshMod.LOGGER.info("VaultEnchMixin: onTick");
-            ActionResult result = processEnch(self.getEquippedStack(EquipmentSlot.FEET), (ench, lvl) -> {
+            processEnch(self.getEquippedStack(EquipmentSlot.FEET), (ench, lvl) -> {
                 if (ench instanceof VaultEnchantment vaultEnch) {
                      vaultEnch.onOffSneak(lvl, self);
                 }

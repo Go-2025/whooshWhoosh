@@ -12,13 +12,13 @@ import java.util.function.Consumer;
 
 public interface Triggerable {
 
-    default ActionResult onAttack(int level, LivingEntity target, Entity attacker, DamageSource damageSource) { throw new UnsupportedOperationException(); }
-    default ActionResult onTargetDamage(int level, LivingEntity target, Entity attacker, DamageSource damageSource) { throw new UnsupportedOperationException(); }
-    default ActionResult onCriticalHit(int level, LivingEntity target, Entity attacker) { throw new UnsupportedOperationException(); }
-    default ActionResult onItemDamage(int level, ItemStack stack, int amount, LivingEntity entity, Consumer<LivingEntity> breakCallback) { throw new UnsupportedOperationException(); }
-    default ActionResult onItemBreak(int level, ItemStack stack, LivingEntity entity, Consumer<LivingEntity> breakCallback) { throw new UnsupportedOperationException(); }
-    default ActionResult onArrowHit(int level, ArrowEntity arrow, LivingEntity target) { throw new UnsupportedOperationException(); }
-    default ActionResult onEntityJump(int level, LivingEntity entity) { throw new UnsupportedOperationException(); }
+    default ActionResult onAttack(int level, LivingEntity source, LivingEntity target) { throw new UnsupportedOperationException(); }
+    default ActionResult onTargetDamage(int level, LivingEntity source, Entity attacker, DamageSource damageSource) { throw new UnsupportedOperationException(); }
+    default ActionResult onCriticalHit(int level, Entity source, LivingEntity target) { throw new UnsupportedOperationException(); }
+    default ActionResult onItemDamage(int level, LivingEntity source, ItemStack stack, int amount, Consumer<LivingEntity> breakCallback) { throw new UnsupportedOperationException(); }
+    default ActionResult onItemBreak(int level, LivingEntity source, ItemStack stack, Consumer<LivingEntity> breakCallback) { throw new UnsupportedOperationException(); }
+    default ActionResult onArrowHit(int level, LivingEntity target, ArrowEntity arrow) { throw new UnsupportedOperationException(); }
+    default ActionResult onEntityJump(int level, LivingEntity source) { throw new UnsupportedOperationException(); }
 
     default boolean canTrigger(int level) {
         return won(level);
@@ -32,7 +32,9 @@ public interface Triggerable {
     }
 
     default boolean won(int level) {
-        return getProbability(level) == 1d || (getProbability(level) != 0d && WhooshwhooshMod.RANDOM.nextDouble() < getProbability(level));
+        return level > 0
+                && (getProbability(level) == 1d || (getProbability(level) != 0d)
+                && WhooshwhooshMod.RANDOM.nextDouble() < getProbability(level));
     }
 
     default double getProbability(int level) {

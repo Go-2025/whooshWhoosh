@@ -22,9 +22,9 @@ public class OfferingEnchantment extends VanishingCurseEnchantment implements Tr
     }
 
     @Override
-    public ActionResult onItemBreak(int level, ItemStack stack, LivingEntity entity, Consumer<LivingEntity> breakCallback) {
-        World world = entity.getWorld();
-        Vec3d basePos = entity.getPos();
+    public ActionResult onItemBreak(int level, LivingEntity source, ItemStack stack, Consumer<LivingEntity> breakCallback) {
+        World world = source.getWorld();
+        Vec3d basePos = source.getPos();
         int n = Math.min(stack.getEnchantments().size(), 200);
 
         for (int i = 0; i < n; i++) {

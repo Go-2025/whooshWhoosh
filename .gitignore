@@ -4,10 +4,10 @@ build/
 out/
 
 # idea
-#.idea/
-#*.iml
-#*.ipr
-#*.iws
+.idea/
+*.iml
+*.ipr
+*.iws
 
 # fabric
 run/

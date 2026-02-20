@@ -23,7 +23,7 @@ public class SpellshotEnchantment extends Enchantment implements Cooldown, Trigg
     }
 
     @Override
-    public ActionResult onArrowHit(int level, ArrowEntity arrow, LivingEntity target) {
+    public ActionResult onArrowHit(int level, LivingEntity target, ArrowEntity arrow) {
         Entity entity = arrow.getOwner();
         if (canTrigger(entity, level)) {
             boolean triggered = false;

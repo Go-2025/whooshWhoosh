@@ -24,11 +24,11 @@ public class BoneShatterEnchantment extends Enchantment implements Triggerable {
     }
 
     @Override
-    public ActionResult onCriticalHit(int level, LivingEntity target, Entity attacker) {
+    public ActionResult onCriticalHit(int level, Entity source, LivingEntity target) {
         if (canTrigger(level)) {
             int duration = (level + 2) * 20 / 8 * 9;
             int amplifier = 1;
-            if (attacker instanceof LivingEntity livingAttacker && PlayerUtils.isCritical(livingAttacker, target)) {
+            if (source instanceof LivingEntity livingAttacker && PlayerUtils.isCritical(livingAttacker, target)) {
                 addStatusEffects(target, livingAttacker,
                         new StatusEffectInstance(StatusEffects.WEAKNESS, duration, amplifier),
                         new StatusEffectInstance(StatusEffects.MINING_FATIGUE, duration, amplifier),
