@@ -1,41 +1,56 @@
-package net.gopa.mc.whooshwhoosh.Handler;
+package net.gopa.mc.whooshwhoosh.toolkit.trigger;
 
+import net.gopa.mc.whooshwhoosh.Handler.Handler;
 import net.gopa.mc.whooshwhoosh.WhooshwhooshMod;
-import net.gopa.mc.whooshwhoosh.enchantment.annotation.Trigger;
-import net.gopa.mc.whooshwhoosh.enchantment.interfaces.Triggerable;
-import net.gopa.mc.whooshwhoosh.enums.TriggerPoint;
-import net.gopa.mc.whooshwhoosh.mixin.accessors.EnchantmentAccessorMixin;
-import net.gopa.mc.whooshwhoosh.registry.EnchantmentsRegistry;
 import net.gopa.mc.whooshwhoosh.toolkit.scan.ClassScanner;
-import net.gopa.mc.whooshwhoosh.util.EnchantmentUtil;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.util.ActionResult;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.*;
-import java.util.stream.Collectors;
 
-public class TriggerHandler {
+public abstract class TriggerHandler extends Handler {
 
     private static final String packagePath = "net.gopa.mc.whooshwhoosh";
     private static final Set<String> paths = Set.of(
             "enchantment"
     );
-    public static final List<Class<?>> TRIGGERS = getTriggerMap();
+    public static final List<Class<?>> TRIGGERS = createTriggerMap();
     public static final Map<TriggerPoint, Class<?>[]> POINT_MAP = createTriggerPointMap();
+    protected final TriggerPoint point;
 
-    private static List<Class<?>> getTriggerMap() {
+    public TriggerHandler(TriggerPoint point) {
+        this.point = point;
+    }
+
+    private static List<Class<?>> createTriggerMap() {
         List<Class<?>> lst = new ArrayList<>();
         try {
             for (String path : paths) {
                 List<Class<?>> classes = ClassScanner.findClassesInPackage(packagePath + "." + path, TriggerHandler::isTriggered);
+                classes.sort(Comparator.comparingInt(TriggerHandler::getOrder));
                 lst.addAll(classes);
             }
         } catch (IOException | ClassNotFoundException e) {
             WhooshwhooshMod.LOGGER.warn("Error loading triggers", e);
         }
         return lst;
+    }
+
+    private static int getOrder(Class<?> cls) {
+        final String methodName = "getOrder";
+        try {
+            Object instance = cls.getDeclaredConstructor().newInstance();
+            for (Method method : cls.getMethods()) {
+                boolean isTargetMethod = method.getName().equals(methodName)
+                        && method.getParameterCount() == 0
+                        && method.getReturnType().equals(int.class);
+                if (isTargetMethod) return (int) method.invoke(instance);
+            }
+        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            WhooshwhooshMod.LOGGER.error("Error loading triggers", e);
+        }
+        return 0;
     }
 
     private static Map<TriggerPoint, Class<?>[]> createTriggerPointMap() {
@@ -58,5 +73,9 @@ public class TriggerHandler {
 
     private static boolean isTriggered(Class<?> cls) {
         return Triggerable.class.isAssignableFrom(cls) && cls.isAnnotationPresent(Trigger.class);
+    }
+
+    protected boolean isOtherPoint() {
+        return point == TriggerPoint.OTHER;
     }
 }

@@ -5,7 +5,6 @@ import net.gopa.mc.whooshwhoosh.WhooshwhooshMod;
 import net.gopa.mc.whooshwhoosh.registry.EnchantmentsRegistry;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.random.Random;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -18,12 +17,7 @@ public abstract class OfferingEnchMixin {
 
     @Unique
     private static final Enchantment OFFERING_ENCH = EnchantmentsRegistry.OFFERING.get();
-    @Unique
-    private static final Random RANDOM = WhooshwhooshMod.RANDOM;
 
-    /**
-     * 当物品受损时，添加献祭附魔的额外伤害
-     */
     @ModifyVariable(
             method = "damage(ILnet/minecraft/entity/LivingEntity;Ljava/util/function/Consumer;)V",
             at = @At("HEAD"),
@@ -39,6 +33,6 @@ public abstract class OfferingEnchMixin {
         int min = getIntDamage.get(0.12f);
         int max = getIntDamage.get(0.20f);
 
-        return amount * RANDOM.nextInt(max - min) + min;
+        return amount * WhooshwhooshMod.RANDOM.nextInt(max - min) + min;
     }
 }

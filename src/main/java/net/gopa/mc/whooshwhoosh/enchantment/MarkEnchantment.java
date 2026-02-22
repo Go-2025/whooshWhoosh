@@ -1,11 +1,10 @@
 package net.gopa.mc.whooshwhoosh.enchantment;
 
-import net.gopa.mc.whooshwhoosh.WhooshwhooshMod;
-import net.gopa.mc.whooshwhoosh.enchantment.annotation.Trigger;
 import net.gopa.mc.whooshwhoosh.enchantment.interfaces.Stored;
-import net.gopa.mc.whooshwhoosh.enchantment.interfaces.Triggerable;
-import net.gopa.mc.whooshwhoosh.enums.TriggerPoint;
 import net.gopa.mc.whooshwhoosh.toolkit.dataTool.DataSaver;
+import net.gopa.mc.whooshwhoosh.toolkit.trigger.Trigger;
+import net.gopa.mc.whooshwhoosh.toolkit.trigger.TriggerPoint;
+import net.gopa.mc.whooshwhoosh.toolkit.trigger.Triggerable;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.Entity;
@@ -43,17 +42,10 @@ public class MarkEnchantment extends Enchantment implements Stored, Triggerable 
                 World world = attacker.getWorld();
                 int lstId = attData.getInt(KEY1);
 
-//                Runnable addNewMark = () -> {
-//                    target.addStatusEffect(new StatusEffectInstance(
-//                            StatusEffects.GLOWING, 10 * 20, level - 1));
-//                    tarSaver.putInt(KEY2, level).save();
-//                    attSaver.putInt(KEY1, target.getId()).save();
-//                };
-
                 if (!tarData.contains(KEY2)) {
                     if (world.getEntityById(lstId) instanceof LivingEntity lstTarget) {
                         DataSaver lstSaver = getDataSaver(lstTarget);
-                        WhooshwhooshMod.LOGGER.info("MarkEnchMixin.onArrowHit: {}/{}", attData, tarSaver.getData());
+//                        WhooshwhooshMod.LOGGER.info("MarkEnchMixin.onArrowHit: {}/{}", attData, tarSaver.getData());
                         lstTarget.removeStatusEffect(StatusEffects.GLOWING);
                         lstSaver.remove(KEY2).save();
                     }
@@ -62,19 +54,6 @@ public class MarkEnchantment extends Enchantment implements Stored, Triggerable 
                     tarSaver.putInt(KEY2, level).save();
                     attSaver.putInt(KEY1, target.getId()).save();
                 }
-
-//                if (world.getEntityById(lstId) instanceof LivingEntity lstTarget) {
-//                    if (!target.equals(lstTarget)) {
-//                        DataSaver lstSaver = getDataSaver(lstTarget);
-//
-//                        WhooshwhooshMod.LOGGER.info("MarkEnchMixin.onArrowHit: {}/{}", attData, tarSaver.getData());
-//                        lstTarget.removeStatusEffect(StatusEffects.GLOWING);
-//                        lstSaver.remove(KEY2).save();
-//                        addNewMark.run();
-//                    }
-//                } else {  // world.getEntityById(lstId) == null 或 不能转换时
-//                    addNewMark.run();
-//                }
             }
         }
         return ActionResult.PASS;

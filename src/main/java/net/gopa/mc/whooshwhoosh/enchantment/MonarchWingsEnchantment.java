@@ -1,10 +1,10 @@
 package net.gopa.mc.whooshwhoosh.enchantment;
 
-import net.gopa.mc.whooshwhoosh.enchantment.annotation.Trigger;
 import net.gopa.mc.whooshwhoosh.enchantment.interfaces.Stored;
-import net.gopa.mc.whooshwhoosh.enchantment.interfaces.Triggerable;
-import net.gopa.mc.whooshwhoosh.enums.TriggerPoint;
 import net.gopa.mc.whooshwhoosh.toolkit.dataTool.DataSaver;
+import net.gopa.mc.whooshwhoosh.toolkit.trigger.Trigger;
+import net.gopa.mc.whooshwhoosh.toolkit.trigger.TriggerPoint;
+import net.gopa.mc.whooshwhoosh.toolkit.trigger.Triggerable;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.enchantment.Enchantment;

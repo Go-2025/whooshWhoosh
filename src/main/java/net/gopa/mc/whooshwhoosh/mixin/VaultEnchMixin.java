@@ -1,8 +1,9 @@
 package net.gopa.mc.whooshwhoosh.mixin;
 
-import net.gopa.mc.whooshwhoosh.WhooshwhooshMod;
+import net.gopa.mc.whooshwhoosh.Handler.EnchTriggerHandler;
 import net.gopa.mc.whooshwhoosh.enchantment.VaultEnchantment;
-import net.minecraft.entity.EquipmentSlot;
+import net.gopa.mc.whooshwhoosh.registry.EnchantmentsRegistry;
+import net.gopa.mc.whooshwhoosh.toolkit.trigger.TriggerPoint;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.ActionResult;
@@ -11,8 +12,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import static net.gopa.mc.whooshwhoosh.util.EnchantmentUtil.processEnch;
 
 @Mixin({ServerPlayerEntity.class})
 public abstract class VaultEnchMixin {
@@ -26,13 +25,9 @@ public abstract class VaultEnchMixin {
         boolean currentSneak = self.isSneaking();
 
         if (!currentSneak && lastSneakState) {
-            WhooshwhooshMod.LOGGER.info("VaultEnchMixin: onTick");
-            processEnch(self.getEquippedStack(EquipmentSlot.FEET), (ench, lvl) -> {
-                if (ench instanceof VaultEnchantment vaultEnch) {
-                     vaultEnch.onOffSneak(lvl, self);
-                }
-                return ActionResult.PASS;
-            });
+            ActionResult result = new EnchTriggerHandler(TriggerPoint.OTHER)
+                    .handleEntity(self, (VaultEnchantment) EnchantmentsRegistry.VAULT.get(), (t, l) -> t.onOffSneak(l, self))
+                    .result();
         }
         lastSneakState = currentSneak;
     }

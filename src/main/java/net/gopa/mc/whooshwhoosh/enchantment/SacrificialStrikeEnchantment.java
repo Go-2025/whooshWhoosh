@@ -1,8 +1,8 @@
 package net.gopa.mc.whooshwhoosh.enchantment;
 
-import net.gopa.mc.whooshwhoosh.enchantment.annotation.Trigger;
-import net.gopa.mc.whooshwhoosh.enchantment.interfaces.Triggerable;
-import net.gopa.mc.whooshwhoosh.enums.TriggerPoint;
+import net.gopa.mc.whooshwhoosh.toolkit.trigger.Trigger;
+import net.gopa.mc.whooshwhoosh.toolkit.trigger.TriggerPoint;
+import net.gopa.mc.whooshwhoosh.toolkit.trigger.Triggerable;
 import net.gopa.mc.whooshwhoosh.util.PlayerUtils;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
@@ -12,7 +12,10 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
+import net.minecraft.item.AxeItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.SwordItem;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.ActionResult;
 

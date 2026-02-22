@@ -23,7 +23,6 @@ public abstract class ExeDeadrattleMixin {
             Consumer<LivingEntity> breakCallback,
             CallbackInfo ci
     ) {
-        ItemBreakEvent.EVENT.invoker().interact(
-                (ItemStack) (Object) this, entity, breakCallback);
+        ItemBreakEvent.EVENT.invoker().interact((ItemStack) (Object) this, entity, breakCallback);
     }
 }

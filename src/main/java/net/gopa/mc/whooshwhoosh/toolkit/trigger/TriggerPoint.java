@@ -1,7 +1,4 @@
-package net.gopa.mc.whooshwhoosh.enums;
-
-import net.gopa.mc.whooshwhoosh.enchantment.annotation.Trigger;
-import net.gopa.mc.whooshwhoosh.enchantment.interfaces.Triggerable;
+package net.gopa.mc.whooshwhoosh.toolkit.trigger;
 
 import java.util.Arrays;
 
@@ -27,10 +24,12 @@ public enum TriggerPoint {
 
     ON_JUMP,
 
+    ON_ITEM_ENCHANT,
+
     /**
      * @apiNote 仅起占位作用，不做处理
      */
-    OTHER();
+    OTHER;
 
     public boolean hasTriggerPoint(Class<?> cls) {
         Trigger triggerAnno = cls.getAnnotation(Trigger.class);

@@ -7,17 +7,19 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.registry.Registries;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.InvalidIdentifierException;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.BiFunction;
+import java.util.function.Function;
 
 public final class EnchantmentUtil {
+
+    public static String getEnchId(Enchantment ench) {
+        return Objects.requireNonNull(Registries.ENCHANTMENT.getId(ench), "Unknown enchantment").toString();
+    }
 
     public static boolean hasEnch(NbtList enchNbtList, Enchantment targetEnch) {
         if (enchNbtList == null) return false;
@@ -29,11 +31,16 @@ public final class EnchantmentUtil {
                 });
     }
 
+    @Nullable
     public static NbtCompound getEnchNbt(NbtList enchNbtList, Enchantment targetEnch) {
+        return getEnchNbt(enchNbtList, nbt -> nbt.getString("id").equals(getEnchId(targetEnch)));
+    }
+
+    @Nullable
+    public static NbtCompound getEnchNbt(NbtList enchNbtList, Function<NbtCompound, Boolean> predicate) {
         for (NbtElement nbt : enchNbtList) {
             if (!(nbt instanceof NbtCompound compound)) continue;
-            String id = compound.getString("id");
-            if (id.equals(Objects.requireNonNull(Registries.ENCHANTMENT.getId(targetEnch)).toString())) {
+            if (predicate.apply(compound)) {
                 return compound;
             }
         }
@@ -58,36 +65,11 @@ public final class EnchantmentUtil {
     }
 
     public static Enchantment getEnchByNbt(NbtCompound nbt) {
-        try {
-            return Registries.ENCHANTMENT.get(new Identifier(nbt.getString("id")));
-        } catch (InvalidIdentifierException e) {
-            return null;
-        }
-
+        return getEnchById(nbt.getString("id"));
     }
 
-    public static ActionResult processEnch(ItemStack stack, BiFunction<Enchantment, Integer, ActionResult> processor) {
-        NbtList enchNbtList = stack.getEnchantments();
-        for (NbtElement v : enchNbtList) {
-            NbtCompound nbt = (NbtCompound) v;
-            Enchantment ench = getEnchByNbt(nbt);
-            ActionResult result = processor.apply(ench, nbt.getInt("lvl"));
-            if (!result.equals(ActionResult.PASS)) return result;
-        }
-        return ActionResult.PASS;
-    }
-
-    public static ActionResult processEnch(Iterator<ItemStack> stacks, BiFunction<Enchantment, Integer, ActionResult> processor) {
-        while (stacks.hasNext()) {
-            ItemStack stack = stacks.next();
-            ActionResult result = processEnch(stack, processor);
-            if (!result.equals(ActionResult.PASS)) return result;
-        }
-        return ActionResult.PASS;
-    }
-
-    public static ActionResult processEnch(List<ItemStack> stacks, BiFunction<Enchantment, Integer, ActionResult> processor) {
-        return processEnch(stacks.iterator(), processor);
+    public static Enchantment getEnchById(String id) {
+        return Registries.ENCHANTMENT.get(new Identifier(id));
     }
 
     public static Enchantment getEnchByClass(Class<?> cls) {

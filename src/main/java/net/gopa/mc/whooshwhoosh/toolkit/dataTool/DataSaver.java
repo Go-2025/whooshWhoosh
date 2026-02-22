@@ -5,7 +5,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 
-import java.util.*;
+import java.util.List;
+import java.util.ListIterator;
 
 public class DataSaver {
 

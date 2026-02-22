@@ -1,8 +1,8 @@
 package net.gopa.mc.whooshwhoosh.mixin;
 
 import net.gopa.mc.whooshwhoosh.WhooshwhooshMod;
-import net.gopa.mc.whooshwhoosh.interfaces.Persistent;
 import net.gopa.mc.whooshwhoosh.enchantment.interfaces.Stored;
+import net.gopa.mc.whooshwhoosh.interfaces.Persistent;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NbtCompound;
 import org.spongepowered.asm.mixin.Mixin;

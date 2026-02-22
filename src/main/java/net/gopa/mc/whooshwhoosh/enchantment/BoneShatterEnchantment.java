@@ -1,8 +1,8 @@
 package net.gopa.mc.whooshwhoosh.enchantment;
 
-import net.gopa.mc.whooshwhoosh.enchantment.annotation.Trigger;
-import net.gopa.mc.whooshwhoosh.enchantment.interfaces.Triggerable;
-import net.gopa.mc.whooshwhoosh.enums.TriggerPoint;
+import net.gopa.mc.whooshwhoosh.toolkit.trigger.Trigger;
+import net.gopa.mc.whooshwhoosh.toolkit.trigger.TriggerPoint;
+import net.gopa.mc.whooshwhoosh.toolkit.trigger.Triggerable;
 import net.gopa.mc.whooshwhoosh.util.PlayerUtils;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;

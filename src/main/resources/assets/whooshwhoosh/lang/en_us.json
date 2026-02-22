@@ -26,5 +26,7 @@
   "enchantment.whooshwhoosh.mark": "mark",
   "enchantment.whooshwhoosh.mark.desc": "Marks a target; shots at the marked target deal increased damage",
   "enchantment.whooshwhoosh.sacrificial_strike": "sacrificial strike",
-  "enchantment.whooshwhoosh.sacrificial_strike.desc": "When attacking, sacrifices own health to deal additional damage"
+  "enchantment.whooshwhoosh.sacrificial_strike.desc": "When attacking, sacrifices own health to deal additional damage",
+  "enchantment.whooshwhoosh.elastic": "elastic",
+  "enchantment.whooshwhoosh.elastic.desc": "When attacked, knocks back the attacker"
 }

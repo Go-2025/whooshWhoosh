@@ -2,8 +2,8 @@ package net.gopa.mc.whooshwhoosh.mixin;
 
 import net.gopa.mc.whooshwhoosh.Handler.EnchTriggerHandler;
 import net.gopa.mc.whooshwhoosh.enchantment.SacrificialStrikeEnchantment;
-import net.gopa.mc.whooshwhoosh.enums.TriggerPoint;
 import net.gopa.mc.whooshwhoosh.registry.EnchantmentsRegistry;
+import net.gopa.mc.whooshwhoosh.toolkit.trigger.TriggerPoint;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ActionResult;
@@ -22,7 +22,7 @@ public class SacrificialStrikeEnchMixin {
     private void onAttack(Entity target, CallbackInfo ci) {
         PlayerEntity self = (PlayerEntity) (Object) this;
         ActionResult res = new EnchTriggerHandler(TriggerPoint.OTHER)
-                .handle(self, (SacrificialStrikeEnchantment) EnchantmentsRegistry.SACRIFICIAL_STRIKE.get(),
+                .handleEntity(self, (SacrificialStrikeEnchantment) EnchantmentsRegistry.SACRIFICIAL_STRIKE.get(),
                         (e, l) -> e.onPlayerAttack(l, self, target))
                 .result();
     }

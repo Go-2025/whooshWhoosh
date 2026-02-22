@@ -1,15 +1,17 @@
 package net.gopa.mc.whooshwhoosh.enchantment;
 
-import net.gopa.mc.whooshwhoosh.enchantment.annotation.Trigger;
-import net.gopa.mc.whooshwhoosh.enchantment.interfaces.Triggerable;
-import net.gopa.mc.whooshwhoosh.enums.TriggerPoint;
+import net.gopa.mc.whooshwhoosh.toolkit.trigger.Trigger;
+import net.gopa.mc.whooshwhoosh.toolkit.trigger.TriggerPoint;
+import net.gopa.mc.whooshwhoosh.toolkit.trigger.Triggerable;
 import net.gopa.mc.whooshwhoosh.util.EquipmentSlotUtils;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.item.*;
+import net.minecraft.item.DyeableArmorItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.NotNull;

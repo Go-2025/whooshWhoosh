@@ -13,7 +13,6 @@ public abstract class EntityJumpMixin {
 
     @Inject(method = "jump", at = @At("HEAD"))
     private void jump(CallbackInfo ci) {
-        LivingEntity self = (LivingEntity) (Object) this;
-        EntityJumpEvent.EVENT.invoker().interact(self);
+        EntityJumpEvent.EVENT.invoker().interact((LivingEntity) (Object) this);
     }
 }

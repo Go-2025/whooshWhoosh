@@ -1,29 +1,22 @@
 package net.gopa.mc.whooshwhoosh.mixin;
 
+import net.gopa.mc.whooshwhoosh.Handler.EnchTriggerHandler;
+import net.gopa.mc.whooshwhoosh.enchantment.SymbiosisEnchantment;
 import net.gopa.mc.whooshwhoosh.registry.EnchantmentsRegistry;
-import net.minecraft.enchantment.Enchantment;
+import net.gopa.mc.whooshwhoosh.toolkit.trigger.TriggerPoint;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtList;
-import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.ActionResult;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Comparator;
-import java.util.List;
 import java.util.function.Consumer;
-
-import static net.gopa.mc.whooshwhoosh.util.EnchantmentUtil.getEnchItems;
-import static net.gopa.mc.whooshwhoosh.util.EnchantmentUtil.hasEnch;
 
 
 @Mixin(ItemStack.class)
 public abstract class SymbiosisEnchMixin {
-
-    private static final Enchantment SYMBIOSIS_ENCH = EnchantmentsRegistry.SYMBIOSIS.get();
 
     @Inject(
             method = "damage(ILnet/minecraft/entity/LivingEntity;Ljava/util/function/Consumer;)V",
@@ -31,48 +24,14 @@ public abstract class SymbiosisEnchMixin {
             cancellable = true,
             order = Integer.MAX_VALUE
     )
-    private void WhenSymbiosisEnchItemIsDamaged(
+    private void onDamage(
             int amount, LivingEntity entity, Consumer<LivingEntity> breakCallback, CallbackInfo ci
     ) {
-        if (!canTrigger(entity)) return;
-
-        ServerPlayerEntity player = (ServerPlayerEntity) entity;
-        List<ItemStack> symItems = getSymItems(player);
-        symItems.sort(Comparator.comparingInt(ItemStack::getDamage));
-
-        damage(symItems, player, amount, symItems.size(), ci);
-    }
-
-    private static void damage(
-            List<ItemStack> symItems,
-            ServerPlayerEntity player,
-            int amount,
-            int destroyedCount,
-            CallbackInfo ci
-    ) {
-        for (ItemStack stack : symItems) {
-            int maxDamage = stack.getMaxDamage();
-            int tolDamage = maxDamage - stack.getDamage();
-            int newDamage = Math.min(tolDamage, amount);
-            amount -= newDamage;
-
-            if (!stack.damage(newDamage, player.getRandom(), player)) destroyedCount--;
-            if (tolDamage <= 0) break;
-        }
-        if (!(amount > 0 && destroyedCount == symItems.size())) {
+        ActionResult result = new EnchTriggerHandler(TriggerPoint.OTHER)
+                .handleEntity(entity, (SymbiosisEnchantment) EnchantmentsRegistry.SYMBIOSIS.get(), (ench, level) -> ench.onDamage(amount, entity, breakCallback))
+                .result();
+        if (result.isAccepted()) {
             ci.cancel();
         }
-    }
-
-    private boolean canTrigger(LivingEntity entity) {
-        if (entity instanceof ServerPlayerEntity) {
-            NbtList enchantments = ((ItemStack) (Object) this).getEnchantments();
-            return hasEnch(enchantments, SYMBIOSIS_ENCH);
-        }
-        return false;
-    }
-
-    private static List<ItemStack> getSymItems(ServerPlayerEntity player) {
-        return getEnchItems(player.getInventory(), SYMBIOSIS_ENCH, true);
     }
 }

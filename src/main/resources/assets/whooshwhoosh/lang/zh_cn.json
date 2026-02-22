@@ -26,5 +26,7 @@
   "enchantment.whooshwhoosh.mark": "标记",
   "enchantment.whooshwhoosh.mark.desc": "标记目标，射击该目标造成更多伤害",
   "enchantment.whooshwhoosh.sacrificial_strike": "祭血",
-  "enchantment.whooshwhoosh.sacrificial_strike.desc": "消耗血量造成额外伤害"
+  "enchantment.whooshwhoosh.sacrificial_strike.desc": "消耗血量造成额外伤害",
+  "enchantment.whooshwhoosh.elastic": "弹性",
+  "enchantment.whooshwhoosh.elastic.desc": "被攻击时击退攻击者"
 }
