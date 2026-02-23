@@ -1,7 +1,7 @@
 package net.gopa.mc.whooshwhoosh.mixin;
 
 import net.gopa.mc.whooshwhoosh.event.api.PlayerCriticalHitEvent;
-import net.gopa.mc.whooshwhoosh.util.PlayerUtils;
+import net.gopa.mc.whooshwhoosh.toolkit.util.PlayerUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;

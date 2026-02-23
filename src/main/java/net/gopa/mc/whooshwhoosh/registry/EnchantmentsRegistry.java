@@ -1,11 +1,8 @@
 package net.gopa.mc.whooshwhoosh.registry;
 
-import net.gopa.mc.whooshwhoosh.WhooshwhooshMod;
 import net.gopa.mc.whooshwhoosh.enchantment.*;
+import net.gopa.mc.whooshwhoosh.toolkit.registry.RegistryEnchantment;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.util.Identifier;
 
 import java.util.function.Supplier;
 
@@ -47,7 +44,7 @@ public enum EnchantmentsRegistry {
 
     public static void registerAll() {
         for (EnchantmentsRegistry value : values()) {
-            Registry.register(Registries.ENCHANTMENT, new Identifier(WhooshwhooshMod.MOD_ID, value.id), value.get());
+            RegistryEnchantment.register(value.get(), value.id);
         }
     }
 

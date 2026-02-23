@@ -3,7 +3,7 @@ package net.gopa.mc.whooshwhoosh.enchantment;
 import net.gopa.mc.whooshwhoosh.toolkit.trigger.Trigger;
 import net.gopa.mc.whooshwhoosh.toolkit.trigger.TriggerPoint;
 import net.gopa.mc.whooshwhoosh.toolkit.trigger.Triggerable;
-import net.gopa.mc.whooshwhoosh.util.PlayerUtils;
+import net.gopa.mc.whooshwhoosh.toolkit.util.PlayerUtils;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.Entity;
@@ -15,7 +15,7 @@ import net.minecraft.item.AxeItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 
-import static net.gopa.mc.whooshwhoosh.util.StatusEffectUtils.addStatusEffects;
+import static net.gopa.mc.whooshwhoosh.toolkit.util.StatusEffectUtils.addStatusEffects;
 
 @Trigger(TriggerPoint.ON_CRITICAL_HIT)
 public class BoneShatterEnchantment extends Enchantment implements Triggerable {

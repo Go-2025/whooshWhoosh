@@ -1,4 +1,4 @@
-package net.gopa.mc.whooshwhoosh.util;
+package net.gopa.mc.whooshwhoosh.toolkit.util;
 
 import net.gopa.mc.whooshwhoosh.toolkit.dataTool.DataSaver;
 import net.minecraft.entity.Entity;

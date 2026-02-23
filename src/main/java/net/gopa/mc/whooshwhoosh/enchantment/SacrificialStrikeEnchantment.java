@@ -3,7 +3,7 @@ package net.gopa.mc.whooshwhoosh.enchantment;
 import net.gopa.mc.whooshwhoosh.toolkit.trigger.Trigger;
 import net.gopa.mc.whooshwhoosh.toolkit.trigger.TriggerPoint;
 import net.gopa.mc.whooshwhoosh.toolkit.trigger.Triggerable;
-import net.gopa.mc.whooshwhoosh.util.PlayerUtils;
+import net.gopa.mc.whooshwhoosh.toolkit.util.PlayerUtils;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.Entity;

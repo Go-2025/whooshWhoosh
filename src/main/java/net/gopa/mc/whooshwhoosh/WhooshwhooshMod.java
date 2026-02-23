@@ -17,8 +17,11 @@ public class WhooshwhooshMod implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        long startTime = System.nanoTime();
         EnchantmentsRegistry.registerAll();
         ListenerRegistry.registerAll();
         WhooshwhooshMod.LOGGER.info("Whoosh whoosh mod initialized");
+        long duration = (System.nanoTime() - startTime) / 1_000_000;
+        LOGGER.info("[{}] 初始化完成! 耗时: {}ms", MOD_ID, duration);
     }
 }

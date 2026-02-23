@@ -1,12 +1,12 @@
 package net.gopa.mc.whooshwhoosh.Handler;
 
-import net.gopa.mc.whooshwhoosh.WhooshwhooshMod;
 import net.gopa.mc.whooshwhoosh.mixin.accessors.EnchantmentAccessorMixin;
-import net.gopa.mc.whooshwhoosh.toolkit.trigger.TriggerHandler;
+import net.gopa.mc.whooshwhoosh.toolkit.registry.RegistryEnchantment;
+import net.gopa.mc.whooshwhoosh.toolkit.trigger.Trigger;
 import net.gopa.mc.whooshwhoosh.toolkit.trigger.TriggerPoint;
 import net.gopa.mc.whooshwhoosh.toolkit.trigger.Triggerable;
-import net.gopa.mc.whooshwhoosh.util.EnchantmentUtil;
-import net.gopa.mc.whooshwhoosh.util.EntityUtils;
+import net.gopa.mc.whooshwhoosh.toolkit.util.EnchantmentUtil;
+import net.gopa.mc.whooshwhoosh.toolkit.util.EntityUtils;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -14,19 +14,63 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.util.ActionResult;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class EnchTriggerHandler extends TriggerHandler {
+public class EnchTriggerHandler extends Handler {
 
+    @NotNull
+    private final TriggerPoint point;
+    public static final List<Triggerable> TRIGGERS = createTriggerList();
+    public static final Map<TriggerPoint, HashSet<Triggerable>> POINT_MAP = createTriggerPointMap();
     private static final Map<TriggerPoint, EquipmentSlot[]> TRIGGER_TO_SLOTS_MAP = createTriggerSlotMapping();
 
-    public EnchTriggerHandler(TriggerPoint point) {
-        super(point);
+
+    public EnchTriggerHandler(@NotNull TriggerPoint point) {
+        this.point = point;
+    }
+
+    private static List<Triggerable> createTriggerList() {
+        List<Triggerable> lst = new ArrayList<>();
+        for (Enchantment ench : RegistryEnchantment.getEnchantments()) {
+            if (!isTriggered(ench.getClass())) continue;
+            Triggerable trigger = (Triggerable) ench;
+            lst.add(trigger);
+        }
+        lst.sort(Comparator.comparingInt(EnchTriggerHandler::getOrder));
+        return lst;
+    }
+
+    private static int getOrder(Triggerable trigger) {
+        return trigger.getOrder();
+    }
+
+    private static Map<TriggerPoint, HashSet<Triggerable>> createTriggerPointMap() {
+        Map<TriggerPoint, HashSet<Triggerable>> map = new EnumMap<>(TriggerPoint.class);
+
+        for (Triggerable item : TRIGGERS) {
+            List<TriggerPoint> points = Arrays.asList(item.getClass().getAnnotation(Trigger.class).value());
+            points.remove(TriggerPoint.OTHER);
+            for (TriggerPoint point : points) {
+                map.put(point, new HashSet<>());
+                map.get(point).add(item);
+            }
+        }
+        return map;
+    }
+
+    protected static boolean isTriggered(Class<?> cls) {
+        return Triggerable.class.isAssignableFrom(cls) && cls.isAnnotationPresent(Trigger.class);
+    }
+
+    protected boolean isOtherPoint() {
+        return point == TriggerPoint.OTHER;
     }
 
     public EnchTriggerHandler handleStack(List<ItemStack> stacks, BiFunction<Triggerable, NbtCompound, ActionResult> processor) {
@@ -95,13 +139,22 @@ public class EnchTriggerHandler extends TriggerHandler {
 
     private ActionResult processEnch(List<ItemStack> stacks, Function<NbtCompound, ActionResult> processor) {
         for (ItemStack stack : stacks) {
-            List<NbtCompound> enchNbtList = this.filterAndSortList(stack.getEnchantments());
-            WhooshwhooshMod.LOGGER.debug("processEnch: {}", enchNbtList);
-            for (int i = enchNbtList.size() - 1; i >= 0; i--) {
-                NbtCompound nbt = enchNbtList.get(i);
+            NbtList enchantments = stack.getEnchantments();
+            for (int i = enchantments.size() - 1; i >= 0; i--) {
+                NbtCompound nbt = enchantments.getCompound(i);
                 ActionResult res = processor.apply(nbt);
                 if (res.isAccepted()) return res;
             }
+
+            // 有优先级的 ↓↓↓
+
+//            List<NbtCompound> enchNbtList = this.filterAndSortList(stack.getEnchantments());
+//            WhooshwhooshMod.LOGGER.debug("processEnch: {}", enchNbtList);
+//            for (int i = enchNbtList.size() - 1; i >= 0; i--) {
+//                NbtCompound nbt = enchNbtList.get(i);
+//                ActionResult res = processor.apply(nbt);
+//                if (res.isAccepted()) return res;
+//            }
         }
         return ActionResult.PASS;
     }
@@ -122,30 +175,27 @@ public class EnchTriggerHandler extends TriggerHandler {
     private List<NbtCompound> filterAndSortList(List<NbtElement> targetList) {
         if (targetList.isEmpty()) return Collections.emptyList();
 
-        List<Class<?>> sortedList = TRIGGERS;
-        // 1. 创建元素->索引的映射（记录首次出现位置）
-        Map<Class<?>, Integer> indexMap = new HashMap<>();
+        List<Triggerable> sortedList = TRIGGERS;
+
+        Map<Triggerable, Integer> indexMap = new HashMap<>();
         for (int i = 0; i < sortedList.size(); i++) {
             indexMap.putIfAbsent(sortedList.get(i), i);
         }
 
-        // 2. 创建分组桶（每个桶对应sortedList的一个位置）
         List<List<NbtCompound>> buckets = new ArrayList<>();
         for (int i = 0; i < sortedList.size(); i++) {
             buckets.add(new ArrayList<>());
         }
 
-        // 3. 将targetList元素分配到对应桶中
         for (NbtElement v : targetList) {
             NbtCompound nbt = (NbtCompound) v;
             Enchantment ench = EnchantmentUtil.getEnchByNbt(nbt);
-            if (indexMap.containsKey(ench.getClass())) {
-                int index = indexMap.get(ench.getClass());
+            if (indexMap.containsKey(ench)) {
+                int index = indexMap.get(ench);
                 buckets.get(index).add(nbt);
             }
         }
 
-        // 4. 合并所有桶（按sortedList顺序）
         List<NbtCompound> result = new ArrayList<>();
         for (List<NbtCompound> bucket : buckets) {
             result.addAll(bucket);
@@ -153,30 +203,15 @@ public class EnchTriggerHandler extends TriggerHandler {
         return result;
     }
 
-//    private <T> List<T> filterAndSortList(List<T> targetList) {
-//        Set<Class<?>> validItems = new HashSet<>(TRIGGERS);
-//        List<T> result = new ArrayList<>();
-//        for (T item : targetList) {
-//            if (validItems.contains(item.getClass())) {
-//                result.add(item);
-//            }
-//        }
-//        return result;
-//    }
-
     private static Map<TriggerPoint, EquipmentSlot[]> createTriggerSlotMapping() {
         Map<TriggerPoint, EquipmentSlot[]> map = new HashMap<>();
 
-        for (Map.Entry<TriggerPoint, Class<?>[]> entry : POINT_MAP.entrySet()) {
+        for (Map.Entry<TriggerPoint, HashSet<Triggerable>> entry : POINT_MAP.entrySet()) {
             TriggerPoint point = entry.getKey();
-            Class<?>[] classes = entry.getValue();
+            HashSet<Triggerable> triggers = entry.getValue();
 
-            EquipmentSlot[] slots = Arrays.stream(classes)
-                    .map(c -> {
-                        Enchantment e = EnchantmentUtil.getEnchByClass(c);
-                        return e == null ? null : (EnchantmentAccessorMixin) e;
-                    })
-                    .filter(Objects::nonNull)
+            EquipmentSlot[] slots = triggers.stream()
+                    .map(t -> (EnchantmentAccessorMixin) t)
                     .flatMap(accessor -> Arrays.stream(accessor.getSlotTypes()))
                     .collect(Collectors.toSet())
                     .toArray(EquipmentSlot[]::new);

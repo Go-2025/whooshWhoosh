@@ -28,7 +28,7 @@ public abstract class SymbiosisEnchMixin {
             int amount, LivingEntity entity, Consumer<LivingEntity> breakCallback, CallbackInfo ci
     ) {
         ActionResult result = new EnchTriggerHandler(TriggerPoint.OTHER)
-                .handleEntity(entity, (SymbiosisEnchantment) EnchantmentsRegistry.SYMBIOSIS.get(), (ench, level) -> ench.onDamage(amount, entity, breakCallback))
+                .handleEntity(entity, (SymbiosisEnchantment) EnchantmentsRegistry.SYMBIOSIS.get(), (ench, level) -> ench.onDamage(amount, entity))
                 .result();
         if (result.isAccepted()) {
             ci.cancel();

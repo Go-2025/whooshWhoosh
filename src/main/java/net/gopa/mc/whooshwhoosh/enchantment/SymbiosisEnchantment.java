@@ -20,9 +20,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
 
-import static net.gopa.mc.whooshwhoosh.util.EnchantmentUtil.getEnchByNbt;
-import static net.gopa.mc.whooshwhoosh.util.EnchantmentUtil.getEnchItems;
-import static net.gopa.mc.whooshwhoosh.util.ItemStackUtil.destroyItem;
+import static net.gopa.mc.whooshwhoosh.toolkit.util.EnchantmentUtil.getEnchByNbt;
+import static net.gopa.mc.whooshwhoosh.toolkit.util.EnchantmentUtil.getEnchItems;
+import static net.gopa.mc.whooshwhoosh.toolkit.util.ItemStackUtil.destroyItem;
 
 @Trigger(TriggerPoint.ON_ITEM_BREAK)
 public class SymbiosisEnchantment extends Enchantment implements Triggerable {
@@ -90,7 +90,7 @@ public class SymbiosisEnchantment extends Enchantment implements Triggerable {
         return ActionResult.PASS;
     }
 
-    public ActionResult onDamage(int amount, LivingEntity entity, Consumer<LivingEntity> breakCallback) {
+    public ActionResult onDamage(int amount, LivingEntity entity) {
         if (entity instanceof ServerPlayerEntity player) {
             List<ItemStack> symItems = getEnchItems(player.getInventory(), this, true);
             symItems.sort(Comparator.comparingInt(ItemStack::getDamage));
