@@ -36,6 +36,10 @@ public class ListenerRegistry {
                 new EnchTriggerHandler(TriggerPoint.ON_JUMP)
                         .handleEntity(source, (t, l) -> t.onEntityJump(l, source))
                         .result());
+        EntityLandEvent.EVENT.register((source) ->
+                new EnchTriggerHandler(TriggerPoint.ON_LAND)
+                        .handleEntity(source, (t, l) -> t.onEntityLand(l, source))
+                        .result());
 
         // player
         PlayerCriticalHitEvent.EVENT.register((target, source) ->

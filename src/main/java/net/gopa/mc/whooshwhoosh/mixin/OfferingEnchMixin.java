@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
-import static net.gopa.mc.whooshwhoosh.util.EnchantmentUtil.hasEnch;
+import static net.gopa.mc.whooshwhoosh.toolkit.util.EnchantmentUtil.hasEnch;
 
 @Mixin(ItemStack.class)
 public abstract class OfferingEnchMixin {

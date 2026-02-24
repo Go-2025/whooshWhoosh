@@ -4,7 +4,7 @@ import net.gopa.mc.whooshwhoosh.enchantment.interfaces.Cooldown;
 import net.gopa.mc.whooshwhoosh.toolkit.trigger.Trigger;
 import net.gopa.mc.whooshwhoosh.toolkit.trigger.TriggerPoint;
 import net.gopa.mc.whooshwhoosh.toolkit.trigger.Triggerable;
-import net.gopa.mc.whooshwhoosh.util.EntityUtils;
+import net.gopa.mc.whooshwhoosh.toolkit.util.EntityUtils;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.Entity;

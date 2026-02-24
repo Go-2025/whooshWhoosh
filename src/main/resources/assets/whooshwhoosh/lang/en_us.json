@@ -28,5 +28,7 @@
   "enchantment.whooshwhoosh.sacrificial_strike": "sacrificial strike",
   "enchantment.whooshwhoosh.sacrificial_strike.desc": "When attacking, sacrifices own health to deal additional damage",
   "enchantment.whooshwhoosh.elastic": "elastic",
-  "enchantment.whooshwhoosh.elastic.desc": "When attacked, knocks back the attacker"
+  "enchantment.whooshwhoosh.elastic.desc": "When attacked, knocks back the attacker",
+  "enchantment.whooshwhoosh.bash": "bash",
+  "enchantment.whooshwhoosh.bash.desc": "When performing a downward strike, knocks airborne targets to the ground and deals increased damage"
 }

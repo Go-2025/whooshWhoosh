@@ -26,6 +26,8 @@ public enum TriggerPoint {
 
     ON_ITEM_ENCHANT,
 
+    ON_LAND,
+
     /**
      * @apiNote 仅起占位作用，不做处理
      */

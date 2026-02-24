@@ -1,4 +1,4 @@
-package net.gopa.mc.whooshwhoosh.util;
+package net.gopa.mc.whooshwhoosh.toolkit.util;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;

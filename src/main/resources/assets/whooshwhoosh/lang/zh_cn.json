@@ -28,5 +28,7 @@
   "enchantment.whooshwhoosh.sacrificial_strike": "祭血",
   "enchantment.whooshwhoosh.sacrificial_strike.desc": "消耗血量造成额外伤害",
   "enchantment.whooshwhoosh.elastic": "弹性",
-  "enchantment.whooshwhoosh.elastic.desc": "被攻击时击退攻击者"
+  "enchantment.whooshwhoosh.elastic.desc": "被攻击时击退攻击者",
+  "enchantment.whooshwhoosh.bash": "击落",
+  "enchantment.whooshwhoosh.bash.desc": "跳跃时攻击空中的目标会将其击落，并造成更高的摔落伤害"
 }

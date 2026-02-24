@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 
 import java.util.function.Consumer;
 
-import static net.gopa.mc.whooshwhoosh.util.EnchantmentUtil.hasEnch;
+import static net.gopa.mc.whooshwhoosh.toolkit.util.EnchantmentUtil.hasEnch;
 
 @Deprecated(since = "1.0.0")
 public interface DeadRattle {

@@ -5,11 +5,11 @@ import net.minecraft.util.ActionResult;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Handler {
+public class Handler {
 
     private final List<ActionResult> results = new ArrayList<>();
 
-    protected <T extends Handler> T addResult(ActionResult res) {
+    public <T extends Handler> T addResult(ActionResult res) {
         results.add(res);
         return self();
     }
