@@ -63,6 +63,7 @@ public interface Triggerable {
     default ActionResult onArrowHit(int level, LivingEntity target, ArrowEntity arrow) { throw new UnsupportedOperationException(); }
     default ActionResult onEntityJump(int level, LivingEntity source) { throw new UnsupportedOperationException(); }
     default ActionResult onItemEnch(int level, ItemStack source, NbtCompound nbt, Map<Enchantment, Integer> enchantments) { throw new UnsupportedOperationException(); }
+    default ActionResult onEntityLand(int level, Entity source) { throw new UnsupportedOperationException(); }
 
     /* ===== 其他方法 ===== */
 

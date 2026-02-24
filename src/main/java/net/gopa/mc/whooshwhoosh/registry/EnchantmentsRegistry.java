@@ -27,6 +27,7 @@ public enum EnchantmentsRegistry {
     MARK("mark", MarkEnchantment::new),
     SACRIFICIAL_STRIKE("sacrificial_strike", SacrificialStrikeEnchantment::new),
     ELASTIC("elastic", ElasticEnchantment::new),
+    BASH("bash", BashEnchantment::new),
 
     // curse
 
